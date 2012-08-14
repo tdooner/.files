@@ -1,0 +1,16 @@
+--pager=less -FRSX
+--sort-files
+--type-add=ruby=.builder
+--type-add=ruby=.rake
+--type-add=ruby=.feature
+--type-set=css=.css,.scss
+--type-set=haml=.haml
+--type-set=puppet=.pp
+--type-set=ragel=.rl
+--type-set=sass=.sass
+--type-set=txt=.txt
+--type-set=walrus=.tmpl
+--type-set=wikitext=.wikitext
+--type-set=xcconfig=.xcconfig
+--ignore-dir=coverage
+--ignore-dir=vendor
