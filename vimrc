@@ -12,6 +12,7 @@ set expandtab
 set hlsearch
 set ignorecase
 set incsearch
+set laststatus=2
 set list
 set listchars=tab:>-
 set nocompatible
