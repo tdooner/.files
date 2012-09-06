@@ -29,3 +29,9 @@ install_symlink() {
 for dotfile in `ls | grep -v install`; do
   install_symlink "$HOME/.${dotfile}" $DOTDIR/$dotfile
 done
+
+if which git > /dev/null; then
+  git submodule update --init
+else
+  echo "Please install git and run 'git submodule update --init'"
+fi
