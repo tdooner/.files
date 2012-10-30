@@ -32,7 +32,7 @@ done
 
 if which git > /dev/null; then
   git submodule update --init
-  git config --global config.excludesfile $HOME/.gitignore
+  git config --global core.excludesfile $HOME/.gitignore
 else
   echo "Please install git and run 'git submodule update --init'"
 fi
