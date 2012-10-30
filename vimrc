@@ -18,6 +18,7 @@ set listchars=tab:>-
 set nocompatible
 set number
 set scrolloff=3
+set softtabstop=2
 set shiftwidth=42
 set showtabline=2
 set sidescrolloff=3
@@ -36,9 +37,16 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * redraw!
 
+" Map :Wq, :WQ, :Q, :W to their appropriately-cased counterparts
+command W w
+command Q q
+command WQ wq
+command Wq wq
+
 " Spellcheck, but not very visably. [sic]
 set spell
 highlight SpellBad ctermbg=234
+highlight SpellCap ctermbg=234
 
 " Improve fold colors
 highlight Folded ctermbg=234
