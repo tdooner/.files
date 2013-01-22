@@ -65,6 +65,9 @@ set -o vi
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
+# This line is dedicated to Aaron Neyer:
+mesg n
+
 # Customize to your needs...
 export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$HOME/bin
 
