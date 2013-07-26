@@ -59,8 +59,8 @@ highlight Folded ctermbg=234
 
 " Navigate tabs with the tab key. It seems to make sense
 " and <Tab> isn't used for anything else.
-nmap <tab> :tabnext<CR>
-nmap <S-tab> :tabprevious<CR>
+" nmap <tab> :tabnext<CR>
+" nmap <S-tab> :tabprevious<CR>
 
 " The ultimate status line.
 set statusline=%F%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ [%l/%L\ (%p%%)]
@@ -72,6 +72,7 @@ endif
 
 " For Ctrl+P
 let g:ctrlp_map = '<c-t>'
+let g:ctrlp_cmd = 'CtrlPMRUFiles'
 
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
