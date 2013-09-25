@@ -28,7 +28,7 @@ set ts=2
 set wildmenu
 set wildmode=longest,list,full
 syntax on
-colorscheme slate
+colorscheme grb256
 
 highlight ColorColumn ctermbg=234
 
