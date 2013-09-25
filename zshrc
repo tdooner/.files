@@ -14,7 +14,7 @@ alias gd="git diff --color"
 alias c="zeus c"
 alias rake="zeus rake"
 alias g10="git log --pretty --oneline --graph -10"
-alias gr="git fetch && git rebase origin/master"
+alias p="git fetch && git rebase origin/master"
 alias window="tmux rename-window"
 alias z="zeus"
 
