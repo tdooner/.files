@@ -26,8 +26,7 @@
   # see `man git-apply' for other options
 
 [core]
-  excludesfile = /home/tom/.gitignore
-  # global gitignore, useful for hiding editor files
+  excludesfile = ~/.gitignore
 
 [alias]
   st = status
