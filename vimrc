@@ -1,7 +1,5 @@
 call pathogen#infect()
 
-let mapleader=","
-
 filetype plugin on
 filetype plugin indent on   " Is this necessary?
 
@@ -30,7 +28,7 @@ set ts=2
 set wildmenu
 set wildmode=longest,list,full
 syntax on
-"colorscheme grb256
+colorscheme grb256
 
 highlight ColorColumn ctermbg=234
 
@@ -72,9 +70,10 @@ if has('persistent_undo')
   set undofile " actually use undo files
 endif
 
-" For Ctrl+P
-let g:ctrlp_map = '<c-t>'
-let g:ctrlp_cmd = 'CtrlPMRUFiles'
+" For Command-T
+let mapleader=","
+let g:CommandTMaxHeight=5
+let g:CommandTMatchWindowReverse=1
 
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
