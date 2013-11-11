@@ -1,5 +1,7 @@
 call pathogen#infect()
 
+let mapleader=","
+
 filetype plugin on
 filetype plugin indent on   " Is this necessary?
 
@@ -17,7 +19,7 @@ set list
 set listchars=tab:>-
 set nocompatible
 set number
-set scrolloff=15
+set scrolloff=5
 set softtabstop=2
 set shiftwidth=42
 set showtabline=2
@@ -28,7 +30,7 @@ set ts=2
 set wildmenu
 set wildmode=longest,list,full
 syntax on
-colorscheme grb256
+"colorscheme grb256
 
 highlight ColorColumn ctermbg=234
 

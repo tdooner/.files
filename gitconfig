@@ -12,7 +12,6 @@
   log = 1000
 [pager]
   show-branch = true
-  status = true
 [rebase]
   autosquash = true
 [rerere]

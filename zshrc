@@ -49,15 +49,13 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git brew zeus rails3)
 
 source $ZSH/oh-my-zsh.sh
 
-TERM=xterm-256color
-EDITOR=`which vim`
-GIT_EDITOR=`which vim`
-export TERM
-export GIT_EDITOR
+export TERM=xterm-256color
+export EDITOR=`which vim`
+export GIT_EDITOR=`which vim`
 
 # Use Vi key bindings for faster navigation
 set -o vi
@@ -68,9 +66,9 @@ bindkey '^R' history-incremental-search-backward
 mesg n
 
 # Customize to your needs...
-export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$HOME/bin
+export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$HOME/bin:$PATH
 
-if [ -d $HOME/.rbenv/bin ] ; then
+if [[ -d $HOME/.rbenv/bin ]] ; then
    export PATH=$HOME/.rbenv/bin:$PATH
    eval "$(rbenv init -)"
 fi
