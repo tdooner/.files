@@ -29,9 +29,10 @@
 
 [alias]
   st = status
-  ci = commit
+  ci = commit -v
   co = checkout
   au = add -u
+  last = "!bash -c \"git checkout `git reflog | grep 'moving from' | grep -v '(HEAD' | egrep '([0-9]{8}-[^ \\(\\)]+)' -o | head -n1`\""
 
   oneline = log --oneline
   # e14d631 (HEAD, origin/master, origin/HEAD, master) Merge branch 'maint'
@@ -51,7 +52,7 @@
   # * | | 05bab3e config.c: Fix a static buffer overwrite bug by avoiding mkpath()
   # * | | 3a81f33 t5501-*.sh: Fix url passed to clone in setup test
 
-  last = log -1
+  # last = log -1
   # show the commit message of HEAD
 
   patch = add --patch

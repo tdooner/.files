@@ -11,6 +11,8 @@ ZSH_THEME="lukerandall"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gd="git diff --color"
+alias gd="bundle exec"
+alias rr="rake routes"
 alias c="zeus c"
 alias rake="zeus rake"
 alias g10="git log --pretty --oneline --graph -10"
@@ -30,6 +32,36 @@ ssh-reagent () {
  done
  echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
+
+green () {
+  echo "$fg[green]$1$reset_color"
+}
+
+red () {
+  echo "$fg[red]$1$reset_color"
+}
+
+staging () {
+  nums=(one two three four five six seven eight nine);
+  for i in $(seq 9); do
+    host="https://causes.caustage0${i}.prod.causes.com";
+    echo -n "$host: "
+    if [[ $(curl -s $host/health) == "OK" ]]; then
+      green "UP";
+      blocked=$(ssh dev@build01 "cat /tmp/deploy_block_staging_${nums[$i]}_causes 2>/dev/null")
+      green "  |--> ${blocked}";
+    else
+      red "DOWN";
+    fi
+  done
+}
+
+if [ $SSH_AUTH_SOCK ]; then
+  # In the parent SSH session
+  ln -sf $SSH_AUTH_SOCK $HOME/.ssh/auth
+else
+  export SSH_AUTH_SOCK=$HOME/.ssh/auth
+fi
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -57,10 +89,19 @@ export TERM=xterm-256color
 export EDITOR=`which vim`
 export GIT_EDITOR=`which vim`
 
+# Causes Stuff:
+# TODO: Come up with a more resilient way to branch based on host.
+if [[ -n $(hostname | grep causes) ]]; then
+  export CHEF_USER=tdooner
+  export PATH=$PATH:$HOME/devscripts:$HOME/devscripts/gerrit:$HOME/devscripts/testing:$HOME/stark
+fi
+
 # Use Vi key bindings for faster navigation
 set -o vi
 bindkey -v
 bindkey '^R' history-incremental-search-backward
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
 
 # This line is dedicated to Aaron Neyer:
 mesg n

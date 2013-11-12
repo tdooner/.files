@@ -71,7 +71,7 @@ if has('persistent_undo')
 endif
 
 " For Command-T
-let mapleader=","
+let mapleader = ','
 let g:CommandTMaxHeight=5
 let g:CommandTMatchWindowReverse=1
 
