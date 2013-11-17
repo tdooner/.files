@@ -24,6 +24,12 @@ install_symlink() {
   ln -sf "$source_file" "$target_file"
 }
 
+if [ $(command -v apt-get) ]; then
+  local deps=(zsh git)
+  echo "Installing $deps with apt-get"
+  sudo apt-get install $deps
+fi
+
 for dotfile in `ls | grep -v install`; do
   install_symlink "$HOME/.${dotfile}" $DOTDIR/$dotfile
 done
