@@ -25,7 +25,7 @@ install_symlink() {
 }
 
 if [ $(command -v apt-get) ]; then
-  local deps=(zsh git)
+  deps="zsh git curl"
   echo "Installing $deps with apt-get"
   sudo apt-get install $deps
 fi
@@ -34,14 +34,30 @@ for dotfile in `ls | grep -v install`; do
   install_symlink "$HOME/.${dotfile}" $DOTDIR/$dotfile
 done
 
-if which git > /dev/null; then
+if [ $(command -v git) ]; then
   git submodule update --init
 else
+  # How did you get the dotfiles then?!
   echo "Please install git and run 'git submodule update --init'"
+fi
+
+if [ $(command -v zsh) ]; then
+  if [ ! $(echo $SHELL | grep 'zsh') ]; then
+    sudo chsh -s $(which zsh)
+  fi
+else
+  echo "Please install zsh and run 'chsh -s $(which zsh)'"
+fi
+
+if [ ! -e ~/.ssh/id_rsa.pub ]; then
+  mkdir ~/.ssh 2>/dev/null
+  chmod 700 ~/.ssh
+  curl tomdooner.com/id_rsa.pub > ~/.ssh/id_rsa.pub
 fi
 
 if [[ ! -d ~/.rbenv ]]; then
   read -n 1 -r -p 'Install rbenv [Y/n]: ' install_rbenv
+  echo ''
 
   if [[ $install_rbenv != "n" ]]; then
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
