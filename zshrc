@@ -110,7 +110,7 @@ bindkey '^E' end-of-line
 mesg n
 
 # Customize to your needs...
-export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$HOME/bin:$PATH
+export PATH=/usr/kerberos/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:$HOME/bin:$PATH
 
 if [[ -d $HOME/.rbenv/bin ]] ; then
    export PATH=$HOME/.rbenv/bin:$PATH
