@@ -43,7 +43,7 @@ fi
 
 if [ $(command -v zsh) ]; then
   if [ ! $(echo $SHELL | grep 'zsh') ]; then
-    sudo chsh -s $(which zsh)
+    sudo chsh -s $(which zsh) $USER
   fi
 else
   echo "Please install zsh and run 'chsh -s $(which zsh)'"
