@@ -72,7 +72,7 @@ endif
 
 " For Command-T
 let mapleader = ','
-let g:CommandTMaxHeight=5
+let g:CommandTMaxHeight=7
 let g:CommandTMatchWindowReverse=1
 
 " set up tab labels with tab number, buffer name, number of windows

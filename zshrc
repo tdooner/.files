@@ -46,21 +46,25 @@ staging () {
   for i in $(seq 9); do
     host="https://causes.caustage0${i}.prod.causes.com";
     echo -n "$host: "
-    if [[ $(curl -s $host/health) == "OK" ]]; then
-      green "UP";
+    if [[ $(timeout 1 curl -s $host/health) == "OK" ]]; then
       blocked=$(ssh dev@build01 "cat /tmp/deploy_block_staging_${nums[$i]}_causes 2>/dev/null")
-      green "  |--> ${blocked}";
+      echo -n "$fg[green]UP$reset_color";
+      if [[ -z $blocked ]]; then
+        echo ""
+      else
+        echo " $fg[yellow](BLOCKED)$reset_color"
+        echo "  |--> $fg[yellow]${blocked}$reset_color";
+      fi
     else
-      red "DOWN";
+      echo "$fg[red]DOWN$reset_color";
     fi
   done
 }
 
-if [ $SSH_AUTH_SOCK ]; then
-  # In the parent SSH session
-  ln -sf $SSH_AUTH_SOCK $HOME/.ssh/auth
-else
+if [ $TMUX ]; then
   export SSH_AUTH_SOCK=$HOME/.ssh/auth
+else
+  ln -sf $SSH_AUTH_SOCK $HOME/.ssh/auth
 fi
 
 # Set to this to use case-sensitive completion
@@ -81,7 +85,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew zeus rails3)
+plugins=(git brew zeus rails)
 
 source $ZSH/oh-my-zsh.sh
 
