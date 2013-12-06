@@ -10,15 +10,14 @@ ZSH_THEME="lukerandall"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias gd="git diff --color"
-alias gd="bundle exec"
+alias be="bundle exec"
 alias rr="rake routes"
 alias c="zeus c"
 alias rake="zeus rake"
 alias g10="git log --pretty --oneline --graph -10"
-alias p="git fetch && git rebase origin/master"
 alias window="tmux rename-window"
 alias z="zeus"
+alias sca="SKIP_CHECKS=all"
 
 # Set up ssh-reagent to streamline timed-out sessions.
 ssh-reagent () {

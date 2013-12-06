@@ -32,6 +32,7 @@
   ci = commit -v
   co = checkout
   au = add -u
+  rc = rebase --continue
   last = "!bash -c \"git checkout `git reflog --pretty=format:%d | grep -v 'HEAD' | egrep '([0-9]{8}-[^ \\(\\)]+)' -o | head -n1`\""
   wip = commit -a -n -m 'WIP ----------------- WIP -------------------- WIP'
   uncommit = reset HEAD^
