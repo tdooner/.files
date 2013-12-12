@@ -1,13 +1,15 @@
 set tw=80
 
-" TODO: This doesn't seem to work...
 " Fold specs to make them more legible.
 function! s:FoldItBlock()
-  let start = search('^\s*\(it\|specify\|scenario\|before\).*do\s*$', 'We')
-  let end = search('end', 'We')
-  let cmd = (start+1).','.(end).'fold'
+  let start = search('^\s*\(describe\|it\|specify\|scenario\|before\|shared_context\).*do\s*$', 'We')
+  let indentlevel = indent(line('.'))
+  let end = search('^' . repeat(' ', indentlevel) . 'end$', 'We')
+  let cmd = (start).','.(end).'fold'
   if (start > 0) && (start < end)
-    execute cmd
+    if (indentlevel > 0) " Don't fold the outermost 'describe' block
+      execute cmd
+    endif
     return 1
   else
     return 0
