@@ -58,11 +58,6 @@ update () {
   fi
 }
 
-if [ $SSH_AUTH_SOCK ]; then
-  # In the parent SSH session
-  ln -sf $SSH_AUTH_SOCK $HOME/.ssh/auth
-else
-
 if [ $TMUX ]; then
   export SSH_AUTH_SOCK=$HOME/.ssh/auth
 else
