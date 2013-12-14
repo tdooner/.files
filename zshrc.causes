@@ -1,0 +1,22 @@
+export CHEF_USER=tdooner
+export PATH=$PATH:$HOME/devscripts:$HOME/devscripts/gerrit:$HOME/devscripts/testing:$HOME/stark
+
+staging () {
+  nums=(one two three four five six seven eight nine);
+  for i in $(seq 9); do
+    host="https://causes.caustage0${i}.prod.causes.com";
+    echo -n "$host: "
+    if [[ $(timeout 1 curl -s $host/health) == "OK" ]]; then
+      blocked=$(ssh dev@build01 "cat /tmp/deploy_block_staging_${nums[$i]}_causes 2>/dev/null")
+      echo -n "$fg[green]UP$reset_color";
+      if [[ -z $blocked ]]; then
+        echo ""
+      else
+        echo " $fg[yellow](BLOCKED)$reset_color"
+        echo "  |--> $fg[yellow]${blocked}$reset_color";
+      fi
+    else
+      echo "$fg[red]DOWN$reset_color";
+    fi
+  done
+}

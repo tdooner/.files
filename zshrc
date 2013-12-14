@@ -19,6 +19,16 @@ alias window="tmux rename-window"
 alias z="zeus"
 alias sca="SKIP_CHECKS=all"
 
+send-xbmc () {
+  curl -H "Content-Type: application/json" -XPOST -d $1 http://turgon:8080/jsonrpc > /dev/null
+}
+
+play () {
+  enqueue=$(echo '{"jsonrpc": "2.0", "method": "Playlist.Insert", "params":{"playlistid":0, "position": 0, "item" : { "file" : "plugin://plugin.video.youtube/?action=play_video&videoid='$1'" }}, "id" : 1}')
+  send-xbmc $enqueue
+  send-xbmc '{"jsonrpc": "2.0", "method": "Player.Open", "params":{"item":{"playlistid":0, "position" : 0}}, "id": 1}'
+}
+
 # Set up ssh-reagent to streamline timed-out sessions.
 ssh-reagent () {
   for agent in /tmp/ssh-*/agent.*; do
@@ -40,25 +50,18 @@ red () {
   echo "$fg[red]$1$reset_color"
 }
 
-staging () {
-  nums=(one two three four five six seven eight nine);
-  for i in $(seq 9); do
-    host="https://causes.caustage0${i}.prod.causes.com";
-    echo -n "$host: "
-    if [[ $(timeout 1 curl -s $host/health) == "OK" ]]; then
-      blocked=$(ssh dev@build01 "cat /tmp/deploy_block_staging_${nums[$i]}_causes 2>/dev/null")
-      echo -n "$fg[green]UP$reset_color";
-      if [[ -z $blocked ]]; then
-        echo ""
-      else
-        echo " $fg[yellow](BLOCKED)$reset_color"
-        echo "  |--> $fg[yellow]${blocked}$reset_color";
-      fi
-    else
-      echo "$fg[red]DOWN$reset_color";
-    fi
-  done
+update () {
+  local remote_sha1=$(cd ~/.files && git ls-remote origin refs/heads/master 2>/dev/null | cut -f1)
+  local local_sha1=$(cd ~/.files && git sha1)
+  if [[ ! $local_sha1 = $remote_sha1 ]]; then
+    cd ~/.files && git fetch && git rebase origin/master
+  fi
 }
+
+if [ $SSH_AUTH_SOCK ]; then
+  # In the parent SSH session
+  ln -sf $SSH_AUTH_SOCK $HOME/.ssh/auth
+else
 
 if [ $TMUX ]; then
   export SSH_AUTH_SOCK=$HOME/.ssh/auth
@@ -95,8 +98,7 @@ export GIT_EDITOR=`which vim`
 # Causes Stuff:
 # TODO: Come up with a more resilient way to branch based on host.
 if [[ -n $(hostname | grep causes) ]]; then
-  export CHEF_USER=tdooner
-  export PATH=$PATH:$HOME/devscripts:$HOME/devscripts/gerrit:$HOME/devscripts/testing:$HOME/stark
+  source ~/.files/zshrc.causes
 fi
 
 # Use Vi key bindings for faster navigation
