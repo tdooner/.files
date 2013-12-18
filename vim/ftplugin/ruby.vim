@@ -7,6 +7,7 @@ function! s:FoldItBlock()
   let end = search('^' . repeat(' ', indentlevel) . 'end$', 'We')
   let cmd = (start).','.(end).'fold'
   if (start > 0) && (start < end)
+    call cursor(start + 1, 1)
     if (indentlevel > 0) " Don't fold the outermost 'describe' block
       execute cmd
     endif
@@ -25,7 +26,7 @@ function! FoldAllItBlocks()
     let result = s:FoldItBlock()
   endwhile
 
-  call cursor(position, 2)
+  call cursor(position, 1)
 endfunction
 
-au BufRead,BufNewFile,FileReadPost *_spec.rb call FoldAllItBlocks()
+au BufEnter *_spec.rb call FoldAllItBlocks()
