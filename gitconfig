@@ -36,6 +36,10 @@
   last = "!bash -c \"git checkout `git reflog --pretty=format:%d | grep -v 'HEAD' | egrep '([0-9]{8}-[^ \\(\\)]+)' -o | head -n1`\""
   wip = commit -a -n -m 'WIP ----------------- WIP -------------------- WIP'
   uncommit = reset HEAD^
+  edit-unmerged = \
+        "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+  add-unmerged = \
+        "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 
   oneline = log --oneline
   # e14d631 (HEAD, origin/master, origin/HEAD, master) Merge branch 'maint'

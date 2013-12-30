@@ -18,6 +18,7 @@ alias g10="git log --pretty --oneline --graph -10"
 alias window="tmux rename-window"
 alias z="zeus"
 alias sca="SKIP_CHECKS=all"
+alias vmi="vim"
 
 send-xbmc () {
   curl -H "Content-Type: application/json" -XPOST -d $1 http://turgon:8080/jsonrpc > /dev/null

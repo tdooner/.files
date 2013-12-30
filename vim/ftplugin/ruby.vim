@@ -29,4 +29,4 @@ function! FoldAllItBlocks()
   call cursor(position, 1)
 endfunction
 
-au BufEnter *_spec.rb call FoldAllItBlocks()
+au BufRead,BufNewFile *_spec.rb call FoldAllItBlocks()
