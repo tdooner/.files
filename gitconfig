@@ -33,7 +33,7 @@
   co = checkout
   au = add -u
   rc = rebase --continue
-  last = "!bash -c \"git checkout `git reflog --pretty=format:%d | grep -v 'HEAD' | egrep '([0-9]{8}-[^ \\(\\)]+)' -o | head -n1`\""
+  last = "!bash -c \"select BRANCH in \\$(git reflog | egrep -o '[0-9]{8}\\-[^\\) ]+' | head -n 100 | sort | tac | uniq); do git checkout \\$BRANCH && break; done;\""
   wip = commit -a -n -m 'WIP ----------------- WIP -------------------- WIP'
   uncommit = reset HEAD^
   edit-unmerged = \
@@ -66,7 +66,7 @@
   # add hunks of code interactively
   # useful for separating a bunch of changes into logical commits
 
-  amend = commit --amend
+  amend = commit --amend -v
   # take staging and push it into the previous commit
   # useful when adding small chunks to a WIP commit
 
@@ -94,6 +94,7 @@
   # useful rebasing your topic branch against the newest version of master
 
   from = !sh -c 'git fetch origin && git rebase origin/master' -
+  fromi = !sh -c 'git fetch origin && git rebase -i origin/master' -
   # fetch origin and rebase against origin master
 
   resom = !sh -c 'git fetch origin && git reset --hard origin/master' -
