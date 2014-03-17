@@ -14,6 +14,7 @@ alias be="bundle exec"
 alias rr="[[ -e .zeus-sock ]] && zeus rake routes || bundle exec rake routes"
 alias c="[[ -e .zeus-sock ]] && zeus rails console || bundle exec rails console"
 alias rake="[[ -e .zeus-sock ]] && zeus rake || bundle exec rake"
+alias gd="git diff --color"
 alias g10="git log --pretty --oneline --graph -10"
 alias window="tmux rename-window"
 alias z="zeus"
@@ -86,7 +87,6 @@ plugins=(git brew zeus rails)
 
 source $ZSH/oh-my-zsh.sh
 
-export TERM=xterm-256color
 export EDITOR=`which vim`
 export GIT_EDITOR=`which vim`
 
@@ -107,7 +107,7 @@ bindkey '^E' end-of-line
 mesg n
 
 # Customize to your needs...
-export PATH=/usr/kerberos/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:$HOME/bin:$PATH
+export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$HOME/bin:$PATH
 
 if [[ -d $HOME/.rbenv/bin ]] ; then
    export PATH=$HOME/.rbenv/bin:$PATH

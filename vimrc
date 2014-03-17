@@ -70,10 +70,10 @@ if has('persistent_undo')
   set undofile " actually use undo files
 endif
 
-" For Command-T
+" For CommandT
 let mapleader = ','
 let g:CommandTMaxHeight=7
-let g:CommandTMatchWindowReverse=1
+let g:CommandTMatchWindowReverse = 1
 
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
