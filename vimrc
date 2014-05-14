@@ -75,6 +75,8 @@ let mapleader = ','
 let g:CommandTMaxHeight=7
 let g:CommandTMatchWindowReverse = 1
 
+nnoremap <Leader><Leader> :NERDTreeFind<CR>
+
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
   let label = ''
