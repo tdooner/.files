@@ -1,0 +1,10 @@
+config defaultToCurrentScreen true
+
+alias full move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias lefthalf move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+
+bind up:cmd ${full}
+bind left:cmd ${lefthalf}
+bind right:cmd ${righthalf}
+bind down:cmd chain throw 1 resize | throw 0 resize
