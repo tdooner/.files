@@ -7,7 +7,6 @@ set autoindent
 set background=dark
 set backspace=2
 set colorcolumn=80
-set cursorline!
 set expandtab
 set hlsearch
 set ignorecase
