@@ -22,6 +22,7 @@ set shiftwidth=42
 set showtabline=2
 set sidescrolloff=3
 set sw=2
+set backupdir=~/.files/vim/tmp/
 set term=xterm-256color
 set ts=2
 set wildmenu
