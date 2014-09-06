@@ -110,6 +110,6 @@ mesg n
 export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$HOME/bin:$PATH
 
 if [[ -d $HOME/.rbenv/bin ]] ; then
-   export PATH=$HOME/.rbenv/bin:$PATH
+   export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
    eval "$(rbenv init -)"
 fi

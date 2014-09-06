@@ -1,7 +1,7 @@
 [user]
   gerrit = tom
   name = Tom Dooner
-  email = tom.dooner@causes.com
+	email = tom.dooner@brigade.com
 [help]
   autocorrect = 10
 [log]
