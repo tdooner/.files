@@ -90,6 +90,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR=`which vim`
 export GIT_EDITOR=`which vim`
+export GOPATH=$HOME/dev/go
 
 # Causes Stuff:
 # TODO: Come up with a more resilient way to branch based on host.
@@ -106,9 +107,10 @@ bindkey '^E' end-of-line
 
 # This line is dedicated to Aaron Neyer:
 mesg n
+stty -ixon  # disable ctrl+s
 
 # Customize to your needs...
-export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$HOME/bin:$PATH
+export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$GOPATH/bin:$HOME/bin:$PATH
 
 if [[ -d $HOME/.rbenv/bin ]] ; then
    export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH

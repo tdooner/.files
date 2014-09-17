@@ -1,0 +1,1 @@
+au BufRead,BufNewFile *new-commit set filetype=gitcommit

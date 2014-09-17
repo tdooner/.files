@@ -6,7 +6,9 @@ filetype plugin indent on   " Is this necessary?
 set autoindent
 set background=dark
 set backspace=2
+set backupdir=~/.files/vim/tmp//
 set colorcolumn=80
+set dir=~/.files/vim/tmp//
 set expandtab
 set hlsearch
 set ignorecase
@@ -22,7 +24,7 @@ set shiftwidth=42
 set showtabline=2
 set sidescrolloff=3
 set sw=2
-set backupdir=~/.files/vim/tmp/
+set swapfile
 set term=xterm-256color
 set ts=2
 set wildmenu
@@ -66,7 +68,7 @@ highlight Folded ctermbg=234
 set statusline=%F%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ [%l/%L\ (%p%%)]
 
 if has('persistent_undo')
-  set undodir=~/.vim/tmp/undo,. " keep undo files out of the way
+  set undodir=~/.vim/tmp/undo// " keep undo files out of the way
   set undofile " actually use undo files
 endif
 
@@ -76,6 +78,10 @@ let g:CommandTMaxHeight=7
 let g:CommandTMatchWindowReverse = 1
 
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
+
+function ConvertAttributes()
+  %s!node.\(\w\+\).\(\w\+\)!node['\1']['\2']!g
+endfunction
 
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
