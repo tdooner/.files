@@ -58,6 +58,3 @@
 [submodule "vim/bundle/vim-mustache-handlebars"]
 	path = vim/bundle/vim-mustache-handlebars
 	url = git://github.com/mustache/vim-mustache-handlebars.git
-[submodule "vim/bundle/json"]
-	path = vim/bundle/json
-	url = https://github.com/elzr/vim-json.git
