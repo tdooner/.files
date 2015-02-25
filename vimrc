@@ -29,6 +29,7 @@ set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
+set wildignore+=node_modules/**,**/bower_components/**
 syntax on
 colorscheme grb256
 
@@ -76,6 +77,8 @@ endif
 let mapleader = ','
 let g:CommandTMaxHeight=7
 let g:CommandTMatchWindowReverse = 1
+let g:CommandTMaxDepth=7
+let g:CommandTInputDebounce=100
 
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
 

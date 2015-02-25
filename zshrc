@@ -94,7 +94,7 @@ export GOPATH=$HOME/dev/go
 
 # Causes Stuff:
 # TODO: Come up with a more resilient way to branch based on host.
-if [[ -n $(hostname | grep causes) ]]; then
+if [[ -n $(hostname | grep brigade) ]]; then
   source ~/.files/zshrc.causes
 fi
 
@@ -110,7 +110,7 @@ mesg n
 stty -ixon  # disable ctrl+s
 
 # Customize to your needs...
-export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$GOPATH/bin:$HOME/bin:$PATH
+export PATH=$HOME/bin:$GOPATH/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$PATH
 
 if [[ -d $HOME/.rbenv/bin ]] ; then
    export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
