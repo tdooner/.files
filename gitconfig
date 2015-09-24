@@ -1,5 +1,5 @@
 [user]
-  gerrit = tom
+	gerrit = tom.dooner
   name = Tom Dooner
 	email = tom.dooner@brigade.com
 [help]
@@ -91,6 +91,7 @@
   # - local changes can be cleanly rebased on top of origin and fast-forwarded
 
   rom = rebase origin/master
+	rhu = reset --hard @{u}
   # useful rebasing your topic branch against the newest version of master
 
   from = !sh -c 'git fetch origin && git rebase origin/master' -

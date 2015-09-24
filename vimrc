@@ -3,6 +3,7 @@ call pathogen#infect()
 filetype plugin on
 filetype plugin indent on   " Is this necessary?
 
+set autoread
 set autoindent
 set background=dark
 set backspace=2
@@ -30,7 +31,7 @@ set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**
+set wildignore+=node_modules/**,**/bower_components/**,vendor/**,doc/**,tmp/**,env/**
 syntax on
 colorscheme grb256
 
@@ -81,10 +82,13 @@ let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxDepth=7
 let g:CommandTInputDebounce=100
 
+map <Leader>[ :GitGutterPrevHunk<CR>
+map <Leader>] :GitGutterNextHunk<CR>
+
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
 
 function ConvertAttributes()
-  %s!node.\(\w\+\).\(\w\+\)!node['\1']['\2']!g
+  %s!\(node\|default\).\(\w\+\).\(\w\+\)!\1['\2']['\3']!g
 endfunction
 
 " set up tab labels with tab number, buffer name, number of windows
