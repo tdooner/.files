@@ -20,6 +20,7 @@ set nocompatible
 set number
 set scrolloff=5
 set softtabstop=2
+set shiftround
 set shiftwidth=42
 set showtabline=2
 set sidescrolloff=3
@@ -29,7 +30,7 @@ set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=node_modules/**,**/bower_components/**
+set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**
 syntax on
 colorscheme grb256
 
