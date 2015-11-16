@@ -20,3 +20,4 @@
 --ignore-dir=log
 --ignore-dir=tmp
 --ignore-dir=env
+--ignore-dir=.chef

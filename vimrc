@@ -82,10 +82,21 @@ let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxDepth=7
 let g:CommandTInputDebounce=100
 
+" For GitGutter
+let g:gitgutter_eager=0
+let g:gitgutter_realtime = 0
 map <Leader>[ :GitGutterPrevHunk<CR>
 map <Leader>] :GitGutterNextHunk<CR>
 
+" For vim-go
+let g:go_fmt_command = "goimports"
+nnoremap <Leader>d :GoDef<CR>
+
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
+
+" For syntastic
+" let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+let g:syntastic_always_populate_loc_list = 1
 
 function ConvertAttributes()
   %s!\(node\|default\).\(\w\+\).\(\w\+\)!\1['\2']['\3']!g

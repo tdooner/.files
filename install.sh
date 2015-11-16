@@ -49,12 +49,6 @@ else
   echo "Please install zsh and run 'chsh -s $(which zsh)'"
 fi
 
-if [ ! -e ~/.ssh/id_rsa.pub ]; then
-  mkdir ~/.ssh 2>/dev/null
-  chmod 700 ~/.ssh
-  curl tomdooner.com/id_rsa.pub > ~/.ssh/id_rsa.pub
-fi
-
 if [[ ! -d ~/.rbenv ]]; then
   read -n 1 -r -p 'Install rbenv [Y/n]: ' install_rbenv
   echo ''

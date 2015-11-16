@@ -1,19 +1,10 @@
-# Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
 ZSH_CUSTOM="$HOME/.files/oh-my-zsh-custom"
 ZSH_THEME="tdooner"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias be="bundle exec"
 alias rr="[[ -e .zeus.sock ]] && zeus rake routes || bundle exec rake routes"
-alias c="[[ -e .zeus.sock ]] && zeus console || bundle exec rails console"
+alias dockre="docker"
 alias rake="[[ -e .zeus.sock ]] && zeus rake || bundle exec rake"
 alias gd="git diff --color"
 alias g10="git log --pretty --oneline --graph -10"
@@ -73,9 +64,6 @@ fi
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
 
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
 # Uncomment following line if you want to disable autosetting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
@@ -84,20 +72,15 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew zeus rails)
+plugins=(git brew zeus rails colored-man-pages rbenv)
 
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR=`which vim`
-export GIT_EDITOR=`which vim`
+export GIT_EDITOR=$EDITOR
 export GOPATH=$HOME/dev/go
 
-# Causes Stuff:
-# TODO: Come up with a more resilient way to branch based on host.
-if [[ -n $(hostname | grep brigade) ]]; then
-  source ~/.files/zshrc.causes
-fi
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 # Use Vi key bindings for faster navigation
 set -o vi
@@ -111,9 +94,9 @@ mesg n
 stty -ixon  # disable ctrl+s
 
 # Customize to your needs...
-export PATH=$HOME/bin:$GOPATH/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:$PATH
+export PATH=$HOME/bin:$GOPATH/bin:$PATH
 
 if [[ -d $HOME/.rbenv/bin ]] ; then
-   export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
+   # export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
    eval "$(rbenv init -)"
 fi
