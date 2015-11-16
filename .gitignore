@@ -5,3 +5,4 @@ vim/ruby/command-t/matcher.o
 vim/ruby/command-t/mkmf.log
 vim/ruby/command-t/ext.so
 vim/tmp
+!vim/tmp/undo/.gitkeep
