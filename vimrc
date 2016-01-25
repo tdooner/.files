@@ -99,7 +99,7 @@ nnoremap <Leader><Leader> :NERDTreeFind<CR>
 let g:syntastic_always_populate_loc_list = 1
 
 function ConvertAttributes()
-  %s!\(node\|default\).\(\w\+\).\(\w\+\)!\1['\2']['\3']!g
+  %s!\(node\|default\)\.\(\w\+\)\.\(\w\+\)!\1['\2']['\3']!g
 endfunction
 
 " set up tab labels with tab number, buffer name, number of windows
