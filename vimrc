@@ -12,7 +12,6 @@ set colorcolumn=80
 set dir=~/.files/vim/tmp//
 set expandtab
 set hlsearch
-set ignorecase
 set incsearch
 set laststatus=2
 set list

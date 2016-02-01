@@ -22,3 +22,4 @@
 --ignore-dir=env
 --ignore-dir=.chef
 --ignore-dir=env
+--ignore-dir=public/assets
