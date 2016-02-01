@@ -70,9 +70,6 @@
 [submodule "vim/bundle/vim-go"]
 	path = vim/bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
-[submodule "vim/bundle/syntastic"]
-	path = vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
 [submodule "vim/plugin/nerdcommenter"]
 	path = vim/plugin/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
