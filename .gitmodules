@@ -73,9 +73,6 @@
 [submodule "vim/bundle/tagbar"]
 	path = vim/bundle/tagbar
 	url = git@github.com:majutsushi/tagbar.git
-[submodule "vim/bundle/youcompleteme"]
-	path = vim/bundle/youcompleteme
-	url = git@github.com:Valloric/YouCompleteMe.git
 [submodule "vim/bundle/Dockerfile.vim"]
 	path = vim/bundle/Dockerfile.vim
 	url = https://github.com/ekalinin/Dockerfile.vim.git
@@ -91,3 +88,6 @@
 [submodule "vim/bundle/vim-powerline"]
 	path = vim/bundle/vim-powerline
 	url = git@github.com:powerline/powerline.git
+[submodule "vim/bundle/YouCompleteMe"]
+	path = vim/bundle/YouCompleteMe
+	url = git@github.com:Valloric/YouCompleteMe.git
