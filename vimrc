@@ -31,7 +31,7 @@ set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=node_modules/**,**/bower_components/**,vendor/**,doc/**,tmp/**,env/**
+set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**,*.pyc,doc/**,tmp/**
 syntax on
 colorscheme grb256
 
@@ -92,7 +92,9 @@ map <Leader>] :GitGutterNextHunk<CR>
 let g:go_fmt_command = "goimports"
 nnoremap <Leader>d :GoDef<CR>
 
+" For NERD Tree
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
+let NERDTreeIgnore = ['\.pyc$']
 
 " For syntastic
 " let g:syntastic_ruby_checkers = ['mri', 'rubocop']
