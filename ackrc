@@ -21,3 +21,4 @@
 --ignore-dir=tmp
 --ignore-dir=env
 --ignore-dir=.chef
+--ignore-dir=env
