@@ -14,7 +14,7 @@ alias vmi="vim"
 alias k="bundle exec knife"
 
 send-xbmc () {
-  curl -H "Content-Type: application/json" -XPOST -d $1 http://turgon:8080/jsonrpc > /dev/null
+  curl -H "Content-Type: application/json" -XPOST -d $1 http://columbus:8080/jsonrpc > /dev/null
 }
 
 play () {
@@ -100,3 +100,7 @@ if [[ -d $HOME/.rbenv/bin ]] ; then
    # export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
    eval "$(rbenv init -)"
 fi
+
+if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+
+source ~/.zshrc.local
