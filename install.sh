@@ -35,10 +35,10 @@ for dotfile in `ls | grep -v install`; do
 done
 
 if [ $(command -v git) ]; then
-  git submodule update --init
+  git submodule update --init --recursive
 else
   # How did you get the dotfiles then?!
-  echo "Please install git and run 'git submodule update --init'"
+  echo "Please install git and run 'git submodule update --init --recursive'"
 fi
 
 if [ $(command -v zsh) ]; then
