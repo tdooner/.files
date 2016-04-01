@@ -85,3 +85,9 @@
 [submodule "vim/bundle/import-js"]
 	path = vim/bundle/import-js
 	url = git@github.com:trotzig/import-js.git
+[submodule "nvim/bundle/Vundle.vim"]
+	path = nvim/bundle/Vundle.vim
+	url = git@github.com:VundleVim/Vundle.vim.git
+[submodule "vim/bundle/vim-powerline"]
+	path = vim/bundle/vim-powerline
+	url = git@github.com:powerline/powerline.git
