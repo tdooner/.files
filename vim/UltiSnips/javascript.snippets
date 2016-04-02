@@ -1,0 +1,20 @@
+snippet cc "createClass" b
+var ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`} = React.createClass({
+  propTypes: {
+  },
+  /**
+   * @return {Object}
+   */
+  render: function() {
+    return (
+      $0
+    );
+  }
+});
+
+module.exports = $1;
+endsnippet
+
+snippet pt "React.propTypes" b
+React.propTypes.$0
+endsnippet

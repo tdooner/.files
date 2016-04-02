@@ -1,0 +1,9 @@
+snippet http "Net::HTTP request" bm
+$1 = URI('$2')
+Net::HTTP.start($1.host, $1.port, use_ssl: true) do |http|
+	req = Net::HTTP::Get.new($1.request_uri)
+
+	resp = http.request(req)
+	raise "Request Failed: #{$1}" unless resp.code.to_i < 300
+end
+endsnippet
