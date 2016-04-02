@@ -7,6 +7,7 @@ build_command_t() {
   ruby_version=$1
   rbenv local $ruby_version
   cd "$COMMAND_T_ROOT/ruby/command-t"
+  make clean
   ruby extconf.rb
   make
 }
@@ -25,7 +26,7 @@ if [ ! -d "$ruby_link" ]; then
 fi
 # echo "Vim linked against Ruby: $ruby_link_version"
 # echo "Current rbenv global: $rbenv_global_version"
-if [ -d "$COMMAND_T_ROOT" ]; then
+if [ -f "$COMMAND_T_ROOT/ruby/command-t/ext.so" ]; then
   cd "$COMMAND_T_ROOT"
   previous_version=$(git describe --abbrev=0)
   echo 'Updating CommandT...'
