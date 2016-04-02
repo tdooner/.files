@@ -12,6 +12,7 @@ alias window="tmux rename-window"
 alias z="zeus"
 alias vmi="vim"
 alias k="bundle exec knife"
+alias vi="vim"
 #alias vvim="$(which vim)"
 #alias vim="nvim"
 
