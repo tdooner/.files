@@ -169,35 +169,20 @@ function GoTest()
 endfunction
 nnoremap <Leader>gt :call GoTest()<CR>
 
-" set up tab labels with tab number, buffer name, number of windows
-function! GuiTabLabel()
-  let label = ''
-  let bufnrlist = tabpagebuflist(v:lnum)
-  " Add '+' if one of the buffers in the tab page is modified
-  for bufnr in bufnrlist
-    if getbufvar(bufnr, "&modified")
-      let label = '+'
-      break
-    endif
-  endfor
-  " Append the tab number
-  let label .= v:lnum.': '
-  " Append the buffer name
-  let name = bufname(bufnrlist[tabpagewinnr(v:lnum) - 1])
-  if name == ''
-    " give a name to no-name documents
-    if &buftype=='quickfix'
-      let name = '[Quickfix List]'
-    else
-      let name = '[No Name]'
-    endif
+function GoPreviousTabOrBuffer()
+  if tabpagenr('$') == 1
+    exec(":bp")
   else
-    " get only the file name
-    let name = fnamemodify(name,":t")
+    exec(":tabprevious")
   endif
-  let label .= name
-  " Append the number of windows in the tab page
-  let wincount = tabpagewinnr(v:lnum, '$')
-  return label . '  [' . wincount . ']'
 endfunction
-set guitablabel=%{GuiTabLabel()}
+nnoremap gT :call GoPreviousTabOrBuffer()<CR>
+
+function GoNextTabOrBuffer()
+  if tabpagenr('$') == 1
+    exec(":bn")
+  else
+    exec(":tabnext")
+  endif
+endfunction
+nnoremap gt :call GoNextTabOrBuffer()<CR>
