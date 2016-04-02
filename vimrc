@@ -1,7 +1,27 @@
-call pathogen#infect()
+filetype off
 
-filetype plugin on
-filetype plugin indent on   " Is this necessary?
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'benekastah/neomake'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-surround'
+Plugin 'trotzig/import-js'
+Plugin 'wincent/command-t'
+
+call vundle#end()
+filetype plugin indent on
 
 set autoread
 set autoindent

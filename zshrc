@@ -25,24 +25,11 @@ play () {
   send-xbmc '{"jsonrpc": "2.0", "method": "Player.Open", "params":{"item":{"playlistid":0, "position" : 0}}, "id": 1}'
 }
 
-# Set up ssh-reagent to streamline timed-out sessions.
-ssh-reagent () {
-  for agent in /tmp/ssh-*/agent.*; do
-    export SSH_AUTH_SOCK=$agent
-    if ssh-add -l 2>&1 > /dev/null; then
-      echo Found working SSH Agent:
-      ssh-add -l
-      return
-    fi
- done
- echo Cannot find ssh agent - maybe you should reconnect and forward it?
-}
-
-green () {
+green() {
   echo "$fg[green]$1$reset_color"
 }
 
-red () {
+red() {
   echo "$fg[red]$1$reset_color"
 }
 
@@ -98,9 +85,9 @@ stty -ixon  # disable ctrl+s
 # Customize to your needs...
 export PATH=$HOME/bin:$GOPATH/bin:$PATH
 
-if [[ -d $HOME/.rbenv/bin ]] ; then
-   # export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
-   eval "$(rbenv init -)"
+# Sanity check against mulitple rbenv installs:
+if [ -d "$HOME/.rbenv" -a -n "$RBENV_ROOT" -a "$RBENV_ROOT" != "$HOME/.rbenv" ]; then
+  echo "ERROR: \$RBENV_ROOT points to $RBENV_ROOT, but you also have a ~/.rbenv directory"
 fi
 
 [ -d "$HOME/.nodenv" ] && export PATH=$HOME/.nodenv/bin:$PATH

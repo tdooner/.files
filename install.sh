@@ -2,7 +2,7 @@
 set -e
 export DOTDIR="$( cd "$( dirname "$0" )" && pwd )"
 
-backup () {
+backup() {
   local file=$1
   cp -r "$file" "$file.bak"
 }
@@ -24,22 +24,19 @@ install_symlink() {
   ln -sf "$source_file" "$target_file"
 }
 
-if [ $(command -v apt-get) ]; then
-  deps="zsh git curl"
-  echo "Installing $deps with apt-get"
-  sudo apt-get install $deps
-fi
+bash ~/.files/install/packages.sh
 
-for dotfile in `ls | grep -v install`; do
-  install_symlink "$HOME/.${dotfile}" $DOTDIR/$dotfile
-done
+install_symlink "$HOME/.zshrc" "$DOTDIR/zshrc"
+install_symlink "$HOME/.vimrc" "$DOTDIR/vimrc"
+install_symlink "$HOME/.vim" "$DOTDIR/vim"
+install_symlink "$HOME/.tmux.conf" "$DOTDIR/tmux.conf"
+install_symlink "$HOME/.gitconfig" "$DOTDIR/gitconfig"
+install_symlink "$HOME/.gitignore" "$DOTDIR/gitignore"
+install_symlink "$HOME/.ackrc" "$DOTDIR/ackrc"
 
-if [ $(command -v git) ]; then
-  git submodule update --init --recursive
-else
-  # How did you get the dotfiles then?!
-  echo "Please install git and run 'git submodule update --init --recursive'"
-fi
+bash ~/.files/install/vundle.sh
+bash ~/.files/install/command-t.sh
+bash ~/.files/install/oh-my-zsh.sh
 
 if [ $(command -v zsh) ]; then
   if [ ! $(echo $SHELL | grep 'zsh') ]; then

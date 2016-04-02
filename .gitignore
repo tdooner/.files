@@ -8,3 +8,5 @@ vim/tmp
 !vim/tmp/undo/.gitkeep
 
 zshrc.local
+vim/bundle
+vim/ruby/command-t
