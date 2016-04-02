@@ -3,6 +3,7 @@
 --type-add=ruby=.builder
 --type-add=ruby=.rake
 --type-add=ruby=.feature
+--type-add=js=.jsx
 --type-set=css=.css,.scss
 --type-set=haml=.haml
 --type-add=haml=.hamljs
