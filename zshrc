@@ -12,6 +12,8 @@ alias window="tmux rename-window"
 alias z="zeus"
 alias vmi="vim"
 alias k="bundle exec knife"
+#alias vvim="$(which vim)"
+#alias vim="nvim"
 
 send-xbmc () {
   curl -H "Content-Type: application/json" -XPOST -d $1 http://columbus:8080/jsonrpc > /dev/null
@@ -101,6 +103,7 @@ if [[ -d $HOME/.rbenv/bin ]] ; then
    eval "$(rbenv init -)"
 fi
 
-if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+[ -d "$HOME/.nodenv" ] && export PATH=$HOME/.nodenv/bin:$PATH
+if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
 
 source ~/.zshrc.local

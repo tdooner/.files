@@ -68,6 +68,7 @@ highlight Folded ctermbg=234
 
 " The ultimate status line.
 set statusline=%F%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ [%l/%L\ (%p%%)]
+set rtp+=~/.vim/bundle/vim-powerline/powerline/bindings/vim
 
 if has('persistent_undo')
   set undodir=~/.vim/tmp/undo// " keep undo files out of the way
@@ -96,8 +97,20 @@ nnoremap <Leader><Leader> :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
 " For syntastic
-" let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_javascript_eslint_exec = '~/brigade/node_modules/.bin/eslint'
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_scss_checkers = ['scss_lint'] " disable 'sass' which fails
+
+if split(getcwd(), "/")[-1] == 'brigade'
+  let g:syntastic_ruby_rubocop_exec = '/usr/bin/env'
+  let g:syntastic_ruby_rubocop_args = ['BUNDLE_GEMFILE=~/brigade/.overcommit_gems.rb', 'bundle', 'exec', 'rubocop']
+
+  let g:syntastic_scss_scss_lint_exec = '/usr/bin/env'
+  let g:syntastic_scss_scss_lint_args = ['BUNDLE_GEMFILE=~/brigade/.overcommit_gems.rb', 'bundle', 'exec', 'scss-lint']
+endif
+
 
 " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
 " (via http://stackoverflow.com/a/22253548/1626737)
@@ -113,6 +126,27 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 function ConvertAttributes()
   %s!\(node\|default\)\.\(\w\+\)\.\(\w\+\)!\1['\2']['\3']!g
 endfunction
+
+function GoJavascript()
+  let f = split(expand('%'), "/")
+  echo f
+  execute "e " . join(f[0:-2], "/") . "/index.jsx"
+endfunction
+nnoremap <Leader>gj :call GoJavascript()<CR>
+
+function GoCSS()
+  echo expand('%')
+  let f = split(expand('%'), "/")
+  execute "e " . join(f[0:-2], "/") . "/index.scss"
+endfunction
+nnoremap <Leader>gc :call GoCSS()<CR>
+
+function GoTest()
+  echo expand('%')
+  let f = split(expand('%'), "/")
+  execute "e " . join(f[0:-2], "/") . "/index-test.jsx"
+endfunction
+nnoremap <Leader>gt :call GoTest()<CR>
 
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
