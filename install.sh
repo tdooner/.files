@@ -39,20 +39,10 @@ bash ~/.files/install/vundle.sh
 bash ~/.files/install/command-t.sh
 bash ~/.files/install/oh-my-zsh.sh
 
-if [ $(command -v zsh) ]; then
+if command -v zsh >/dev/null; then
   if [ ! $(echo $SHELL | grep 'zsh') ]; then
     sudo chsh -s $(which zsh) $USER
   fi
 else
   echo "Please install zsh and run 'chsh -s $(which zsh)'"
-fi
-
-if [[ ! -d ~/.rbenv ]]; then
-  read -n 1 -r -p 'Install rbenv [Y/n]: ' install_rbenv
-  echo ''
-
-  if [[ $install_rbenv != "n" ]]; then
-    git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-    git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-  fi
 fi

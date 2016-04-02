@@ -5,8 +5,8 @@ COMMAND_T_ROOT="$HOME/.files/vim/bundle/command-t"
 
 build_command_t() {
   ruby_version=$1
-  rbenv local $ruby_version
   cd "$COMMAND_T_ROOT/ruby/command-t"
+  rbenv local $ruby_version
   make clean
   ruby extconf.rb
   make
@@ -24,9 +24,10 @@ if [ ! -d "$ruby_link" ]; then
   echo "Vim linked ruby does not exist! Rebuilding Vim..."
   bash ~/.files/install/vim.sh force
 fi
+
 # echo "Vim linked against Ruby: $ruby_link_version"
 # echo "Current rbenv global: $rbenv_global_version"
-if [ -f "$COMMAND_T_ROOT/ruby/command-t/ext.so" ]; then
+if [ -f "$COMMAND_T_ROOT/ruby/command-t/ext.o" ]; then
   cd "$COMMAND_T_ROOT"
   previous_version=$(git describe --abbrev=0)
   echo 'Updating CommandT...'

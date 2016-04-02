@@ -19,7 +19,7 @@ install_vim() {
 }
 
 if command -v vim >/dev/null; then
-  [ -z "$force" ] && install_vim
+  [ -n "$force" ] && install_vim
 fi
 
 vim +PluginInstall +qall
