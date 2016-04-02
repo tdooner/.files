@@ -3,11 +3,11 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'Lokaltog/vim-powerline'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'benekastah/neomake'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'powerline/powerline'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-bundler'
@@ -88,7 +88,7 @@ highlight Folded ctermbg=234
 
 " The ultimate status line.
 set statusline=%F%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ [%l/%L\ (%p%%)]
-set rtp+=~/.vim/bundle/vim-powerline/powerline/bindings/vim
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 if has('persistent_undo')
   set undodir=~/.vim/tmp/undo// " keep undo files out of the way
