@@ -33,6 +33,7 @@ install_symlink "$HOME/.tmux.conf" "$DOTDIR/tmux.conf"
 install_symlink "$HOME/.gitconfig" "$DOTDIR/gitconfig"
 install_symlink "$HOME/.gitignore" "$DOTDIR/gitignore"
 install_symlink "$HOME/.ackrc" "$DOTDIR/ackrc"
+touch "$HOME/.zshrc.local"
 
 bash ~/.files/install/vim.sh
 bash ~/.files/install/vundle.sh
