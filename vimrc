@@ -21,6 +21,7 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'trotzig/import-js'
 Plugin 'wincent/command-t'
+Plugin 'wincent/loupe'
 
 call vundle#end()
 filetype plugin indent on
