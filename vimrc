@@ -125,7 +125,7 @@ let NERDTreeIgnore = ['\.pyc$']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = "node_modules/.bin/eslint"
+let g:syntastic_javascript_eslint_exec = "./node_modules/.bin/eslint"
 let g:syntastic_scss_checkers = ['scss_lint'] " disable 'sass' which fails
 
 if split(getcwd(), "/")[-1] == 'brigade'
