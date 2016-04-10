@@ -1,7 +1,12 @@
 snippet cc "createClass" b
-var ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`} = React.createClass({
+const ${1:`!p
+if snip.basename[0:5] == "index":
+  snip.rv = re.sub('\.jsx?$', '', path).split('/')[-2]
+else:
+  snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`} = React.createClass({
   propTypes: {
   },
+
   /**
    * @return {Object}
    */
@@ -17,4 +22,44 @@ endsnippet
 
 snippet pt "React.propTypes" b
 React.propTypes.$0
+endsnippet
+
+snippet ct "create tests" b
+const React = require('react');
+
+const OnboardingFlowLocationPage =
+  require('./index.jsx');
+
+describe('<${1:`!p
+if snip.basename[0:5] == "index":
+  snip.rv = re.sub('\.jsx?$', '', path).split('/')[-2]
+else:
+  snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`}>', function() {
+  beforeEach(() => {
+    // spyOn(eventLog, 'handleEvent');
+
+    this.subject = () => {
+      this.props = {
+        $2
+      };
+
+      return Utils.render(<$1 {...this.props} />);
+    };
+  });
+
+  it('renders', () => {
+    expect(this.subject()).toHaveComponent(
+      $1,
+      { count: 1 }
+    );
+  });
+
+  // it('sends a contextual event', () => {
+  //   this.subject();
+  //   expect(eventLog.handleEvent).toHaveBeenCalledWith({
+  //     page: 'foo',
+  //     action: 'IMPRESSION',
+  //   });
+  // });
+});
 endsnippet

@@ -13,6 +13,8 @@ alias z="zeus"
 alias vmi="vim"
 alias k="bundle exec knife"
 alias vi="vim"
+alias sca="SKIP=all"
+alias migrate="bundle && bin/rake db:migrate && bin/rake db:migrate RAILS_ENV=test"
 #alias vvim="$(which vim)"
 #alias vim="nvim"
 

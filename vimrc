@@ -3,13 +3,17 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'benekastah/neomake'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ervandew/supertab'
 Plugin 'jisaacks/GitGutter'
 Plugin 'mxw/vim-jsx'
+Plugin 'pangloss/vim-javascript'
 Plugin 'powerline/powerline'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdtree'
@@ -197,3 +201,5 @@ function ESFix()
   execute("e!")
 endfunction
 nnoremap <Leader>ef :call ESFix()<CR>
+
+nnoremap <Leader>r :redraw!<CR>
