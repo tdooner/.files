@@ -1,1 +1,2 @@
-set noexpandtab
+set expandtab
+set ts=2
