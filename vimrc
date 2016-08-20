@@ -4,7 +4,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'ConradIrwin/vim-bracketed-paste'
-Plugin 'Galooshi/import-js'
+Plugin 'Galooshi/vim-import-js'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
