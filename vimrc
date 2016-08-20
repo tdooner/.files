@@ -60,6 +60,7 @@ set list
 set listchars=tab:>-
 set nocompatible
 set number
+set relativenumber
 set scrolloff=5
 set softtabstop=2
 set shiftround
@@ -72,7 +73,7 @@ set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**,*.pyc,doc/**,tmp/**
+set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**,*.pyc,doc/**,tmp/**,target/**
 syntax on
 colorscheme grb256
 
@@ -83,11 +84,14 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * redraw!
 
+" Tom slop
 " Map :Wq, :WQ, :Q, :W to their appropriately-cased counterparts
 command W w
 command Q q
 command WQ wq
 command Wq wq
+command Wqa wqa
+inoremap [:w <Esc>:w
 
 " Spellcheck, but not very visably. [sic]
 " set spell
@@ -121,8 +125,9 @@ endif
 let mapleader = ','
 let g:CommandTMaxHeight=7
 let g:CommandTMatchWindowReverse = 1
-let g:CommandTMaxDepth=7
+let g:CommandTMaxDepth=15
 let g:CommandTInputDebounce=100
+let g:CommandTFileScanner='git'
 
 " For GitGutter
 let g:gitgutter_eager=0
@@ -146,6 +151,10 @@ let g:syntastic_javascript_eslint_exec = "./node_modules/.bin/eslint"
 let g:syntastic_scss_checkers = ['scss_lint'] " disable 'sass' which fails
 
 if split(getcwd(), "/")[-1] == 'brigade'
+  " let g:syntastic_javascript_flow_exe = ''
+  " let g:syntastic_javascript_flow_exec = 'node_modules/.bin/flow'
+  " let g:syntastic_javascript_checkers += ['flow']
+
   let g:syntastic_ruby_rubocop_exec = '/usr/bin/env'
   let g:syntastic_ruby_rubocop_args = ['BUNDLE_GEMFILE=~/brigade/.overcommit_gems.rb', 'bundle', 'exec', 'rubocop']
 
