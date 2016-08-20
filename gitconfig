@@ -102,10 +102,11 @@
   resom = !sh -c 'git fetch origin && git reset --hard origin/master' -
   # fetch origin and reset hard to origin/master
 
-  fixup = !sh -c 'git commit --fixup $1 && \
+  fixup = !sh -c 'parent=$(git rev-parse $1~1) && \
+    git commit --fixup $1 && \
     git diff --quiet && stash=false || stash=true && \
     ($stash && git stash || true) && \
-    git rebase -i $1~1 && \
+    GIT_EDITOR=/bin/true git rebase -i $parent && \
     ($stash && git stash pop || true)' -
   # amend to a previous commit:
   #  git add file
