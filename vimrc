@@ -51,6 +51,8 @@ set backupdir=~/.files/vim/tmp//
 set colorcolumn=80
 set dir=~/.files/vim/tmp//
 set expandtab
+set foldlevelstart=1     " remind myself that folds exist
+set foldopen-=block      " allow { and } to not open folds
 set hlsearch
 set incsearch
 set laststatus=2
