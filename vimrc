@@ -36,6 +36,7 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'wincent/command-t'
+Plugin 'wincent/ferret'
 Plugin 'wincent/loupe'
 Plugin 'wlangstroth/vim-racket'
 
