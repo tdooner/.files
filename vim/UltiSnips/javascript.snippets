@@ -1,3 +1,4 @@
+# vim: expandtab
 snippet cc "createClass" b
 const ${1:`!p
 if snip.basename[0:5] == "index":
@@ -7,12 +8,17 @@ else:
   propTypes: {
   },
 
+  mixins: [
+    PureRenderDeepCompareMixin,
+  ],
+
   /**
    * @return {Object}
    */
-  render: function() {
+  render() {
     return (
-      $0
+      <div>
+      </div>
     );
   }
 });
@@ -24,11 +30,12 @@ snippet pt "React.propTypes" b
 React.propTypes.$0
 endsnippet
 
-snippet ct "create tests" b
+snippet ct "create tests" bm
 const React = require('react');
 
-const OnboardingFlowLocationPage =
-  require('./index.jsx');
+const Utils = require('support/utils');
+
+const $1 = require('./index.jsx');
 
 describe('<${1:`!p
 if snip.basename[0:5] == "index":
@@ -36,30 +43,160 @@ if snip.basename[0:5] == "index":
 else:
   snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`}>', function() {
   beforeEach(() => {
-    // spyOn(eventLog, 'handleEvent');
+    this.props = {
+      $2
+    };
 
     this.subject = () => {
-      this.props = {
-        $2
-      };
-
       return Utils.render(<$1 {...this.props} />);
     };
   });
 
   it('renders', () => {
-    expect(this.subject()).toHaveComponent(
-      $1,
-      { count: 1 }
-    );
+    expect(this.subject()).toHaveComponent($1, { count: 1 });
+  });
+});
+endsnippet
+
+snippet tp "this.props" bm
+const {
+  $1,
+} = this.props;
+
+endsnippet
+
+snippet ts "this.state" bm
+const {
+  $1,
+} = this.state;
+
+endsnippet
+
+snippet dd "diffux.define" bm
+diffux.define('$0', function() {
+  return Utils.renderAttachedAndGetNode(
+    <div style={{ display: 'flex', height: '200px' }}>
+    </div>
+  );
+}, { viewports: ['small'] });
+endsnippet
+
+snippet it "jasmine it" bm
+it('$1', () => {
+  $2
+});
+endsnippet
+
+snippet describe "jasmine describe" bm
+describe('$1', () => {
+  beforeEach(() => {
+    $2
   });
 
-  // it('sends a contextual event', () => {
-  //   this.subject();
-  //   expect(eventLog.handleEvent).toHaveBeenCalledWith({
-  //     page: 'foo',
-  //     action: 'IMPRESSION',
-  //   });
-  // });
+  it('$3', () => {
+    $4
+  });
 });
+endsnippet
+
+
+snippet Controller "controller" b
+${1:`!p
+if snip.basename[0:5] == "index":
+  snip.rv = re.sub('\.jsx?$', '', path).split('/')[-2]
+else:
+  snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`}.Controller = Controller({
+  Component: $1,
+  resources: {
+    $2
+  },
+  stores: [
+    $3
+  ],
+  fetch: () => {
+    $4
+  },
+});
+endsnippet
+
+snippet cdm "componentDidMount" b
+componentDidMount() {
+  $1
+},
+endsnippet
+
+snippet cwm "componentWillMount" b
+componentWillMount() {
+  $1
+},
+endsnippet
+
+snippet cwu "componentWillUnmount" b
+componentWillUnmount() {
+  $1
+},
+endsnippet
+
+snippet cwrp "componentWillReceiveProps" b
+componentWillReceiveProps(nextProps) {
+  $1
+},
+endsnippet
+
+snippet cwu "componentDidUpdate" b
+componentDidUpdate(nextProps, nextState) {
+  $1
+},
+endsnippet
+
+snippet cwu "componentWillUpdate" b
+componentWillUpdate(nextProps, nextState) {
+  $1
+},
+endsnippet
+
+snippet scu "shouldComponentUpdate" b
+shouldComponentUpdate(nextProps, nextState) {
+  $1
+},
+endsnippet
+
+snippet gis "getInitialState" b
+getInitialState() {
+  return {
+    $1,
+  };
+},
+endsnippet
+
+snippet gdp "getDefaultProps" b
+getDefaultProps() {
+  return {
+    $1,
+  };
+},
+endsnippet
+
+snippet css "create store (singleton)" b
+const Schema = require('lib/schema');
+const SingletonResourceStore = require('stores/singleton_resource_store');
+
+class ${1:`!p
+if snip.basename[0:5] == "index":
+  snip.rv = re.sub('\.jsx?$', '', path).split('/')[-1]
+else:
+  snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`} extends SingletonResourceStore {
+  constructor() {
+    super();
+  }
+
+  getResourceDefinition() {
+    return {
+      schema: new Schema({
+      }),
+    };
+  }
+}
+
+module.exports = new $1();
 endsnippet
