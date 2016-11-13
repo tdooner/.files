@@ -7,3 +7,7 @@ Net::HTTP.start($1.host, $1.port, use_ssl: true) do |http|
 	raise "Request Failed: #{$1}" unless resp.code.to_i < 300
 end
 endsnippet
+
+snippet pry "binding.pry" bm
+require 'pry'; binding.pry
+endsnippet
