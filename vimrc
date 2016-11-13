@@ -218,12 +218,4 @@ function GoNextTabOrBuffer()
 endfunction
 nnoremap gt :call GoNextTabOrBuffer()<CR>
 
-function ESFix()
-  let g:syntastic_javascript_eslint_args = ['--fix']
-  call SyntasticCheck()
-  let g:syntastic_javascript_eslint_args = []
-  execute("e!")
-endfunction
-nnoremap <Leader>ef :call ESFix()<CR>
-
 nnoremap <Leader>r :redraw!<CR>
