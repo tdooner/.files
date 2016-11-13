@@ -18,6 +18,8 @@ alias migrate="bundle && bin/rake db:migrate && bin/rake db:migrate RAILS_ENV=te
 #alias vvim="$(which vim)"
 #alias vim="nvim"
 
+export PYTHONPATH=$HOME/.vim/bundle/ropevim:$PYTHONPATH
+
 send-xbmc () {
   curl -H "Content-Type: application/json" -XPOST -d $1 http://columbus:8080/jsonrpc > /dev/null
 }
