@@ -90,7 +90,7 @@ mesg n
 stty -ixon  # disable ctrl+s
 
 # Customize to your needs...
-export PATH=$HOME/bin:$GOPATH/bin:$PATH
+export PATH=$HOME/bin:$GOPATH/bin:node_modules/.bin:$PATH
 
 # Sanity check against mulitple rbenv installs:
 if [ -d "$HOME/.rbenv" -a -n "$RBENV_ROOT" -a "$RBENV_ROOT" != "$HOME/.rbenv" ]; then
