@@ -19,6 +19,9 @@
 [branch "master"]
   rebase = true
 
+[diff]
+	compactionHeuristic = true
+
 [apply]
   whitespace = fix
   # automagically fix whitespace
