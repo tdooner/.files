@@ -1,0 +1,29 @@
+snippet ipdb "ipdb.set_trace()" b
+import ipdb
+ipdb.set_trace()
+endsnippet
+
+snippet dc "Django command" b
+from optparse import make_option
+
+from django.core.management.base import BaseCommand
+
+custom_options = (
+    # make_option(
+    #     "--forms",
+    #     action="store",
+    #     dest="forms",
+    #     default=None,
+    #     help="Form types to upload (comma-separated list; "
+    #          "choices=('A', 'C', 'F497P1', 'F496P3')"
+    # ),
+)
+
+
+class Command(BaseCommand):
+    help = '${1:"Description goes here"}'
+    option_list = custom_options
+
+    def handle(self, *args, **options):
+        ${2:"pass"}
+endsnippet
