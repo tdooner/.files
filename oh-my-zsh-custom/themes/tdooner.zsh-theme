@@ -2,7 +2,7 @@ source ~/.oh-my-zsh/themes/lukerandall.zsh-theme
 
 # Look for any commits between upstream and here that have my git WIP pattern.
 function work_in_progress_tdooner() {
-  if $(git log '@{u}...HEAD' 2>/dev/null | grep -q -c "\-\- WIP \-\-"); then
+  if $(git log 'master@{u}...HEAD' 2>/dev/null | grep -q -c "\-\- WIP \-\-"); then
     echo "%{$fg[red]%}WIP${ZSH_THEME_GIT_PROMPT_PREFIX%\(}"
   fi
 }
