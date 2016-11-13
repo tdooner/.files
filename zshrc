@@ -18,6 +18,8 @@ alias migrate="bundle && bin/rake db:migrate && bin/rake db:migrate RAILS_ENV=te
 #alias vvim="$(which vim)"
 #alias vim="nvim"
 
+export LESS="-S"
+
 export PYTHONPATH=$HOME/.vim/bundle/ropevim:$PYTHONPATH
 
 send-xbmc () {
