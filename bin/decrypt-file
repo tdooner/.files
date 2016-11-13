@@ -1,0 +1,6 @@
+#!/bin/bash
+# usage: decrypt-file [path]
+set -euo pipefail
+
+orig_filename=$(echo $1 | sed -e 's/\.enc$//')
+exec openssl aes-256-cbc -d -a -in $1 -out $orig_filename

@@ -5,5 +5,12 @@ venv/
 env/
 .DS_Store
 *.pyc
+
+# nodejs static analyzer
 .tern-project
+
+# python static analyzer
 .ropeproject
+
+# project-specific tmux configuration that only I use
+.tmux.local

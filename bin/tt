@@ -1,0 +1,20 @@
+#!/bin/bash
+set -euo pipefail
+
+project=$(basename $(pwd))
+command="zsh"
+config_dir="$HOME/dev/config/${project}"
+
+if [ -d "$HOME/dev/config/${project}" ]; then
+  command="$(which envdir) ${config_dir} ${command}"
+fi
+
+if [ ${1:-''} == 'inner' ]; then
+  tmux set-option default-command "$command"
+
+  [ -f .tmux.local ] && source .tmux.local
+
+  exec $command
+fi
+
+tmux new -A -E -s $project $0 inner

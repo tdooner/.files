@@ -35,6 +35,7 @@ install_symlink "$HOME/.gitignore" "$DOTDIR/gitignore"
 install_symlink "$HOME/.ackrc" "$DOTDIR/ackrc"
 touch "$HOME/.zshrc.local"
 
+bash ~/.files/install/bin.sh
 bash ~/.files/install/vim.sh
 bash ~/.files/install/vundle.sh
 bash ~/.files/install/command-t.sh
