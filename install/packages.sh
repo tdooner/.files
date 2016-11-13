@@ -5,6 +5,7 @@ deps=()
 ! command -v zsh >/dev/null && deps+=('zsh')
 ! command -v curl >/dev/null && deps+=('curl')
 ! command -v wget >/dev/null && deps+=('wget')
+! command -v envdir >/dev/null && deps+=('daemontools')
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
