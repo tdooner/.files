@@ -229,7 +229,7 @@ function GoPreviousTabOrBuffer()
     exec(":tabprevious")
   endif
 endfunction
-nnoremap gT :call GoPreviousTabOrBuffer()<CR>
+nnoremap <silent> gT :call GoPreviousTabOrBuffer()<CR>
 
 function GoNextTabOrBuffer()
   if tabpagenr('$') == 1
