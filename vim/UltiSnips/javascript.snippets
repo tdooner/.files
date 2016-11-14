@@ -112,14 +112,14 @@ if snip.basename[0:5] == "index":
 else:
   snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`}.Controller = Controller({
   Component: $1,
-  resources: {
-    $2
+  fetch: () => {
+    $4
   },
   stores: [
     $3
   ],
-  fetch: () => {
-    $4
+  resources: {
+    $2
   },
 });
 endsnippet
