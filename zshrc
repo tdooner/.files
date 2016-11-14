@@ -72,6 +72,8 @@ plugins=(git brew zeus rails colored-man-pages rbenv)
 
 source $ZSH/oh-my-zsh.sh
 
+unalias rg
+
 export EDITOR=`which vim`
 export GIT_EDITOR=$EDITOR
 export GOPATH=$HOME/dev/go
