@@ -29,6 +29,10 @@ highlight DiffChange term=reverse cterm=bold ctermbg=lightblue ctermfg=16
 highlight DiffText term=reverse cterm=bold ctermbg=lightgray ctermfg=16
 highlight DiffDelete term=reverse cterm=bold ctermbg=lightred ctermfg=16
 
+highlight Pmenu ctermbg=233
 highlight PmenuSel ctermfg=16 ctermbg=156
+
+" NonText is the wrap text character
+highlight NonText ctermbg=233
 
 hi SignColumn guifg=NONE guibg=black gui=NONE ctermfg=NONE ctermbg=black
