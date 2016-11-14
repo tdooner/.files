@@ -72,13 +72,18 @@ const {
 
 endsnippet
 
-snippet dd "diffux.define" bm
-diffux.define('$0', function() {
-  return Utils.renderAttachedAndGetNode(
-    <div style={{ display: 'flex', height: '200px' }}>
-    </div>
+snippet hd "happo.define" bm
+happo.define('<${0:`!p
+if snip.basename[0:5] == "index":
+  snip.rv = re.sub('\.jsx?$', '', path).split('/')[-2]
+else:
+  snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`}>', function() {
+  Utils.renderAttached(
+    <$0
+      $1
+    />
   );
-}, { viewports: ['small'] });
+}, { viewports: ['small', 'medium'] });
 endsnippet
 
 snippet it "jasmine it" bm
