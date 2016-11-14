@@ -39,7 +39,8 @@
   rc = rebase --continue
   last = "!bash -c \"select BRANCH in \\$(git reflog | egrep -o '[0-9]{8}\\-[^\\) ]+' | head -n 100 | sort | tac | uniq); do git checkout \\$BRANCH && break; done;\""
   wip = commit -a -n -m 'WIP ----------------- WIP -------------------- WIP'
-  uncommit = reset HEAD^
+  uncommit = "!bash -c \"git show --pretty=format:%B --quiet > /tmp/git-uncommit; git reset HEAD^\""
+  recommit = "!bash -c \"git ci -F /tmp/git-uncommit\""
   edit-unmerged = \
         "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
   add-unmerged = \
