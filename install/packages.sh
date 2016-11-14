@@ -6,6 +6,7 @@ deps=()
 ! command -v curl >/dev/null && deps+=('curl')
 ! command -v wget >/dev/null && deps+=('wget')
 ! command -v envdir >/dev/null && deps+=('daemontools')
+! command -v cmake >/dev/null && deps+=('cmake')
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
