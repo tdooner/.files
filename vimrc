@@ -50,6 +50,8 @@ set autoindent
 set background=dark
 set backspace=2
 set backupdir=~/.files/vim/tmp//
+set breakindent          " vim8: indent broken lines to first line's indent level
+set breakindentopt=shift:2  " indent broken lines an additional two spaces
 set colorcolumn=80
 set dir=~/.files/vim/tmp//
 set expandtab
@@ -60,6 +62,7 @@ set incsearch
 set laststatus=2
 set list
 set listchars=tab:>-
+set linebreak            " line-break at word boundaries
 set nocompatible
 set number
 set relativenumber
@@ -68,6 +71,7 @@ set softtabstop=2
 set shiftround
 set shiftwidth=42
 set showtabline=2
+set showbreak=>>
 set sidescrolloff=3
 set sw=2
 set swapfile
