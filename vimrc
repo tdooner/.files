@@ -183,27 +183,6 @@ function ConvertAttributes()
   %s!\(node\|default\)\.\(\w\+\)\.\(\w\+\)!\1['\2']['\3']!g
 endfunction
 
-function GoJavascript()
-  let f = split(expand('%'), "/")
-  echo f
-  execute "e " . join(f[0:-2], "/") . "/index.jsx"
-endfunction
-nnoremap <Leader>gj :call GoJavascript()<CR>
-
-function GoCSS()
-  echo expand('%')
-  let f = split(expand('%'), "/")
-  execute "e " . join(f[0:-2], "/") . "/index.scss"
-endfunction
-nnoremap <Leader>gc :call GoCSS()<CR>
-
-function GoTest()
-  echo expand('%')
-  let f = split(expand('%'), "/")
-  execute "e " . join(f[0:-2], "/") . "/index-test.jsx"
-endfunction
-nnoremap <Leader>gt :call GoTest()<CR>
-
 function GoPreviousTabOrBuffer()
   if tabpagenr('$') == 1
     exec(":bp")
@@ -220,6 +199,6 @@ function GoNextTabOrBuffer()
     exec(":tabnext")
   endif
 endfunction
-nnoremap gt :call GoNextTabOrBuffer()<CR>
+nnoremap <silent> gt :call GoNextTabOrBuffer()<CR>
 
 nnoremap <Leader>r :redraw!<CR>
