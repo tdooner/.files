@@ -205,3 +205,15 @@ else:
 
 module.exports = new $1();
 endsnippet
+
+snippet lg "console.log" b
+console.log('$1');
+endsnippet
+
+snippet Intl "IntlStore.t('Component'" w
+{IntlStore.t('`!p
+if snip.basename[0:5] == "index":
+  snip.rv = re.sub('\.jsx?$', '', path).split('/')[-2]
+else:
+  snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`.$0')}
+endsnippet
