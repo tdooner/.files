@@ -9,13 +9,13 @@ install_vim() {
     # No need to uninstall on linux, the subsequent `make` will clobber it.
     if command -v brew >/dev/null; then
       echo 'Uninstalling Vim...'
-      brew unlink vim
+      brew uninstall --force vim
     fi
   fi
 
   echo 'Installing Vim...'
   if command -v brew >/dev/null; then
-    brew install vim
+    brew install --build-from-source vim
   else
     echo '  ...from source'
     tmpdir="$(mktemp -d)"
@@ -29,10 +29,45 @@ install_vim() {
   fi
 }
 
+compile_plugins() {
+  if [ ! -f ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so ]; then
+    echo 'Building YCM shared object...'
+    pushd ~/.vim/bundle/YouCompleteMe
+    ./install.py
+    popd
+  fi
+
+  if [ ! -f ~/.vim/bundle/command-t/ruby/command-t/ext.bundle ]; then
+    echo 'Building Command-T shared object...'
+    pushd ~/.vim/bundle/command-t/ruby/command-t
+    eval "$(rbenv init -)"
+    rbenv shell system
+    ruby extconf.rb
+    make
+    sudo make install
+    popd
+  fi
+}
+
 if ! command -v vim >/dev/null; then
-  [ -n "$force" ] && install_vim
+  # If vim is not installed, install it
+  will_install=true
+elif [ -n "$force" ]; then
+  # If the script is called with a second argument, force the install anyway
+  will_install=true
 elif ! vim --version | grep -q "$version"; then
+  # If the wrong version of vim is installed, upgrade!
+  will_install=true
+else
+  will_install=false
+fi
+
+if $will_install; then
   install_vim
 fi
 
 vim +PluginInstall +qall
+
+if $will_install; then
+  compile_plugins
+fi
