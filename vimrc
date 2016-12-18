@@ -152,48 +152,6 @@ nnoremap <Leader>d :GoDef<CR>
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
-" For vim-markdown
-let g:vim_markdown_folding_disabled = 1
-
-" For syntastic
-" let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-let g:syntastic_javascript_checkers = []
-let g:syntastic_javascript_eslint_exec = "./node_modules/.bin/eslint"
-" let me get away with console.log in dev:
-let g:syntastic_javascript_eslint_args = ["--rule", '{"no-console":[1]}']
-
-let g:syntastic_scss_checkers = ['scss_lint'] " disable 'sass' which fails
-
-if split(getcwd(), "/")[-1] == 'brigade'
-  let g:syntastic_ruby_rubocop_exec = '/usr/bin/env'
-  let g:syntastic_ruby_rubocop_args = ['BUNDLE_GEMFILE=~/brigade/.overcommit_gems.rb', 'bundle', 'exec', 'rubocop']
-
-  let g:syntastic_scss_scss_lint_exec = '/usr/bin/env'
-  let g:syntastic_scss_scss_lint_args = ['BUNDLE_GEMFILE=~/brigade/.overcommit_gems.rb', 'bundle', 'exec', 'scss-lint']
-endif
-
-" For Neomake
-if split(getcwd(), "/")[-1] == 'brigade'
-  let g:neomake_javascript_eslint_maker = {
-        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-          \ '%W%f: line %l\, col %c\, Warning - %m',
-        \ 'exe': "./node_modules/.bin/eslint",
-        \ 'args': ['-f', 'compact', '--rule', '{"no-console":[1]}'],
-        \ }
-
-  let g:neomake_ruby_rubocop_maker = {
-        \ 'args': ['BUNDLE_GEMFILE=~/brigade/.overcommit_gems.rb', 'bundle', 'exec', 'rubocop'],
-        \ 'exe': '/usr/bin/env',
-        \ }
-
-  let g:neomake_scss_scsslint_maker = {
-        \ 'args': ['BUNDLE_GEMFILE=~/brigade/.overcommit_gems.rb', 'bundle', 'exec', 'scss-lint'],
-        \ 'exe': '/usr/bin/env',
-        \ 'errorformat': '%A%f:%l:%v [%t] %m,%A%f:%l [%t] %m',
-        \ }
-endif
-
 let g:neomake_list_height = 2     " this doesn't work but hopefully will someday
 let g:neomake_open_list = 2
 let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
