@@ -16,9 +16,14 @@ if ! vim --version | grep -q '+ruby'; then
   echo 'ERROR: Could not install command-t -- vim built without ruby'
 fi
 
-ruby_link=$(vim --version | grep -oE -- '-L[^ ]+.rbenv[^ ]+' | head -n 1)
-ruby_link="${ruby_link:2}"
-ruby_link_version=$(echo $ruby_link | grep -oE '[0-9]\.[0-9]\.[0-9]')
+ruby_link=$(vim --version | grep -oE -- '-L[^ ]+.rbenv[^ ]+' | head -n 1 || true)
+if [ -z "$ruby_link" ]; then
+  echo "CommandT: It appears that vim was compiled against system ruby"
+  ruby_link_version="system"
+else
+  ruby_link="${ruby_link:2}"
+  ruby_link_version=$(echo $ruby_link | grep -oE '[0-9]\.[0-9]\.[0-9]')
+fi
 
 if [ ! -d "$ruby_link" ]; then
   echo "Vim linked ruby does not exist! Rebuilding Vim..."
