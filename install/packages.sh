@@ -7,6 +7,7 @@ deps=()
 ! command -v wget >/dev/null && deps+=('wget')
 ! command -v envdir >/dev/null && deps+=('daemontools')
 ! command -v cmake >/dev/null && deps+=('cmake')
+! command -v rbenv >/dev/null && deps+=('rbenv')
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
