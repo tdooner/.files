@@ -21,3 +21,8 @@ fi
 if command -v brew >/dev/null; then
   brew install "${deps[@]}"
 fi
+
+# set default shell to zsh if necessary
+chsh -s $(which zsh)
+
+# install oh-my-zsh

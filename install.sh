@@ -37,8 +37,8 @@ install_symlink "$HOME/.slate" "$DOTDIR/slate"
 touch "$HOME/.zshrc.local"
 
 bash ~/.files/install/bin.sh
-bash ~/.files/install/vim.sh
 bash ~/.files/install/vundle.sh
+bash ~/.files/install/vim.sh
 bash ~/.files/install/command-t.sh
 bash ~/.files/install/ycm.sh
 bash ~/.files/install/oh-my-zsh.sh
