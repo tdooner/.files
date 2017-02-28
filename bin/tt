@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-project=$(basename $(pwd))
+project=$(basename $(git rev-parse --show-toplevel || pwd))
 command="zsh"
 config_dir="$HOME/dev/config/${project}"
 
