@@ -9,12 +9,17 @@ if [ -d "$HOME/dev/config/${project}" ]; then
   command="$(which envdir) ${config_dir} ${command}"
 fi
 
+# Run the inside-tmux setup in the first window that opens. (Set the default
+# command and call the .tmux.local script with the appropriate project.)
 if [ ${1:-''} == 'inner' ]; then
   tmux set-option default-command "$command"
 
-  [ -f .tmux.local ] && source .tmux.local
+  # TODO: Add verification that .tmux.local hasn't changed nefariously since
+  # the last run.
+  [ -f .tmux.local ] && bash .tmux.local "$project"
 
   exec $command
 fi
 
+# Finally, kick it all off.
 tmux new -A -E -s $project $0 inner
