@@ -1,0 +1,5 @@
+#!/bin/bash
+# There probably is a better way to do this, but since I'm not sure how to
+# teach `git fixup` to avoid user input otherwise, this script is the
+# standard-location shim.
+exit 0

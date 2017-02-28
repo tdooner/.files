@@ -111,7 +111,7 @@
     git commit --fixup $1 && \
     git diff --quiet && stash=false || stash=true && \
     ($stash && git stash || true) && \
-    GIT_EDITOR=/bin/true git rebase -i $parent && \
+    GIT_EDITOR=~/bin/true git rebase -i $parent && \
     ($stash && git stash pop || true)' -
   # amend to a previous commit:
   #  git add file
