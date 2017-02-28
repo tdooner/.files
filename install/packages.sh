@@ -8,6 +8,7 @@ deps=()
 ! command -v envdir >/dev/null && deps+=('daemontools')
 ! command -v cmake >/dev/null && deps+=('cmake')
 ! command -v rbenv >/dev/null && deps+=('rbenv')
+! command -v tmux >/dev/null && deps+=('tmux')
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
