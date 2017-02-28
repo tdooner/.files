@@ -152,6 +152,9 @@ nnoremap <Leader>d :GoDef<CR>
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
+" For vim-markdown
+let g:vim_markdown_folding_disabled = 1
+
 " For syntastic
 " let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
