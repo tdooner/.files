@@ -34,6 +34,7 @@ install_symlink "$HOME/.gitconfig" "$DOTDIR/gitconfig"
 install_symlink "$HOME/.gitignore" "$DOTDIR/gitignore"
 install_symlink "$HOME/.ackrc" "$DOTDIR/ackrc"
 install_symlink "$HOME/.slate" "$DOTDIR/slate"
+install_symlink "$HOME/.hammerspoon" "$DOTDIR/hammerspoon"
 touch "$HOME/.zshrc.local"
 
 bash ~/.files/install/bin.sh
