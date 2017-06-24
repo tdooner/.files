@@ -11,3 +11,7 @@ endsnippet
 snippet pry "binding.pry" bm
 require 'pry'; binding.pry
 endsnippet
+
+snippet arlog "ActiveRecord logger" bm
+ActiveRecord::Base.logger = Logger.new($stderr)
+endsnippet
