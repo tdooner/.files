@@ -2,16 +2,14 @@
 set -euo pipefail
 
 project=$(basename $(git rev-parse --show-toplevel || pwd))
-command="zsh"
 config_dir="$HOME/dev/config/${project}"
 
-if [ -d "$HOME/dev/config/${project}" ]; then
-  command="$(which envdir) ${config_dir} ${command}"
-fi
+mkdir -p "$config_dir"
+command="$(which envdir) ${config_dir} zsh"
 
 # Run the inside-tmux setup in the first window that opens. (Set the default
 # command and call the .tmux.local script with the appropriate project.)
-if [ ${1:-''} == 'inner' ]; then
+if [ ${1:-''} == 'first-open' ]; then
   tmux set-option default-command "$command"
 
   # TODO: Add verification that .tmux.local hasn't changed nefariously since
@@ -19,7 +17,8 @@ if [ ${1:-''} == 'inner' ]; then
   [ -f .tmux.local ] && bash .tmux.local "$project"
 
   exec $command
+else
+  # Finally, kick it all off.
+  tmux new -A -E -s $project $0 first-open
 fi
 
-# Finally, kick it all off.
-tmux new -A -E -s $project $0 inner
