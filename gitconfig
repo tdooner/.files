@@ -1,7 +1,8 @@
 [user]
-  gerrit = tom.dooner
   name = Tom Dooner
-  email = tom.dooner@brigade.com
+  email = tomdooner@gmail.com
+[includeIf "gitdir:~/dev/cfa/"]
+  path = "~/.files/gitconfig-cfa"
 [help]
   autocorrect = 10
 [log]
