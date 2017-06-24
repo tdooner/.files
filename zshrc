@@ -101,5 +101,3 @@ fi
 
 [ -d "$HOME/.nodenv" ] && export PATH=$HOME/.nodenv/bin:$PATH
 if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
-
-source ~/.zshrc.local
