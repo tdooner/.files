@@ -1,0 +1,4 @@
+[http "https://git.f.tdooner.com"]
+	sslCAInfo = /Users/tomdooner/.flynn/ca-certs/default.pem
+[credential "https://git.f.tdooner.com"]
+	helper = /usr/local/bin/flynn git-credentials
