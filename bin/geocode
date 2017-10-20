@@ -1,0 +1,109 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/LineLength
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Style/FormatStringToken
+# rubocop:disable Lint/HandleExceptions
+
+require 'net/https'
+require 'optparse'
+require 'json'
+
+CACHE_FILE = File.expand_path('~/.cache/tom-geocoding-cache.json')
+API_BASE = URI('https://maps.googleapis.com/maps/api/geocode/json')
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+
+  opts.on('--format=FORMAT', 'Format responses according to string. (%{county})') do |format|
+    options[:format] = format
+  end
+end.parse!
+
+raise 'No GOOGLE_API_TOKEN' unless ENV['GOOGLE_API_TOKEN']
+
+$stdout.sync = true
+
+def extract_component(result, type)
+  component = result['address_components'].detect { |c| c['types'].include?(type) }
+
+  component['long_name'] if component
+end
+
+def format_result(result, format_str)
+  format(
+    format_str,
+    street: extract_component(result, 'route'),
+    neighborhood: extract_component(result, 'neighborhood'),
+    city: extract_component(result, 'locality'),
+    county: extract_component(result, 'administrative_area_level_2'),
+    state: extract_component(result, 'administrative_area_level_1'),
+    country: extract_component(result, 'country'),
+    zip: extract_component(result, 'postal_code')
+  )
+end
+
+def cached_perform_search(address)
+  cache = {}
+
+  begin
+    cache = JSON.parse(File.read(CACHE_FILE))
+  rescue
+    # pass
+  end
+
+  return cache[address] if cache[address]
+
+  cache[address] = perform_search(address)
+
+  File.open(CACHE_FILE, 'w') do |f|
+    f.puts JSON.generate(cache)
+  end
+
+  cache[address]
+end
+
+def perform_search(address)
+  google = API_BASE.dup.tap do |u|
+    u.query = URI.encode_www_form(
+      address: address,
+      key: ENV['GOOGLE_API_TOKEN']
+    )
+  end
+
+  Net::HTTP.start(google.host, google.port, use_ssl: true) do |http|
+    req = Net::HTTP::Get.new(google.request_uri)
+
+    resp = http.request(req)
+    raise "Request Failed: #{google}" unless resp.code.to_i < 300
+
+    results = JSON.parse(resp.body)['results']
+
+    $stderr.puts "More than 1 result for #{address}" if results.length > 1
+
+    if results.length.zero?
+      $stderr.puts "No results for #{address}"
+      return nil
+    end
+
+    results[0]
+  end
+end
+
+while (line = $stdin.gets)
+  address = line.strip
+
+  result = cached_perform_search(address)
+
+  next unless result
+
+  if options[:format]
+    puts format_result(result, options[:format])
+  else
+    puts JSON.generate(result)
+  end
+end
