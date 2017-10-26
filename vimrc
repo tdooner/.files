@@ -25,8 +25,7 @@ Plugin 'neomake/neomake'
 Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'powerline/powerline'
-Plugin 'python-rope/ropevim'
-Plugin 'rking/ag.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'solarnz/thrift.vim'
@@ -54,7 +53,9 @@ set background=dark
 set backspace=2
 set backupdir=~/.files/vim/tmp//
 set breakindent          " vim8: indent broken lines to first line's indent level
-set breakindentopt=shift:2  " indent broken lines an additional two spaces
+set breakindentopt=shift:2 " indent broken lines with additional two spaces
+set breakindentopt+=sbr    " use the 'showbreak' character
+set breakindentopt+=min:80 " ensure the wrapped line has a width of 80
 set colorcolumn=80
 set dir=~/.files/vim/tmp//
 set expandtab
@@ -82,7 +83,7 @@ set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**,*.pyc,doc/**,tmp/**,target/**
+set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**,*.pyc,doc/**,tmp/**,target/**,coverage/**
 syntax on
 colorscheme grb256
 
@@ -136,7 +137,7 @@ let g:CommandTMaxHeight=7
 let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxDepth=15
 let g:CommandTInputDebounce=100
-let g:CommandTFileScanner='git'
+let g:CommandTFileScanner='find'
 
 " For GitGutter
 let g:gitgutter_eager=0
@@ -155,8 +156,18 @@ let NERDTreeIgnore = ['\.pyc$']
 let g:neomake_list_height = 2     " this doesn't work but hopefully will someday
 let g:neomake_open_list = 2
 let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
+let g:neomake_ruby_rubocop_args = ['--format', 'emacs', '-D']
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
+let g:neomake_javascript_eslint_exe = './node_modules/.bin/eslint'
+
+" let g:neomake_verbose = 3 " Debug information
+
+" For vim-rails
+let g:rails_projections = {
+  \ "app/lib/*.rb": { "alternate": "spec/lib/{}_spec.rb" }
+\ }
+
 autocmd! BufWritePost * Neomake
 " get out of the the quickfix menu... there must be a discrepancy between
 " vim/neovim in how the location lists are created
@@ -202,3 +213,7 @@ endfunction
 nnoremap <silent> gt :call GoNextTabOrBuffer()<CR>
 
 nnoremap <Leader>r :redraw!<CR>
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
