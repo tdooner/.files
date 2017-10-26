@@ -5,105 +5,136 @@
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 # rubocop:disable Style/FormatStringToken
-# rubocop:disable Lint/HandleExceptions
 
 require 'net/https'
 require 'optparse'
 require 'json'
 
-CACHE_FILE = File.expand_path('~/.cache/tom-geocoding-cache.json')
-API_BASE = URI('https://maps.googleapis.com/maps/api/geocode/json')
-
-options = {}
-
-OptionParser.new do |opts|
-  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
-
-  opts.on('--format=FORMAT', 'Format responses according to string. (%{county})') do |format|
-    options[:format] = format
-  end
-end.parse!
-
 raise 'No GOOGLE_API_TOKEN' unless ENV['GOOGLE_API_TOKEN']
 
-$stdout.sync = true
+# Geocoding class!
+class TomGeocoder
+  CACHE_FILE = File.expand_path('~/.cache/tom-geocoding-cache.json')
+  API_BASE = URI('https://maps.googleapis.com/maps/api/geocode/json')
 
-def extract_component(result, type)
-  component = result['address_components'].detect { |c| c['types'].include?(type) }
+  # Cache for geocoding results
+  class Cache
+    def initialize(filename)
+      @filename = filename
 
-  component['long_name'] if component
-end
+      begin
+        @cache = JSON.parse(File.read(filename))
+      rescue
+        @cache = {}
+      end
+    end
 
-def format_result(result, format_str)
-  format(
-    format_str,
-    street: extract_component(result, 'route'),
-    neighborhood: extract_component(result, 'neighborhood'),
-    city: extract_component(result, 'locality'),
-    county: extract_component(result, 'administrative_area_level_2'),
-    state: extract_component(result, 'administrative_area_level_1'),
-    country: extract_component(result, 'country'),
-    zip: extract_component(result, 'postal_code')
-  )
-end
+    def [](key)
+      @cache[key]
+    end
 
-def cached_perform_search(address)
-  cache = {}
+    def []=(key, value)
+      @cache[key] = value
+    end
 
-  begin
-    cache = JSON.parse(File.read(CACHE_FILE))
-  rescue
-    # pass
+    def persist
+      File.open(@filename, 'w') do |f|
+        f.puts JSON.generate(@cache)
+      end
+    end
   end
 
-  return cache[address] if cache[address]
-
-  cache[address] = perform_search(address)
-
-  File.open(CACHE_FILE, 'w') do |f|
-    f.puts JSON.generate(cache)
+  def initialize
+    @cache = Cache.new(CACHE_FILE)
   end
 
-  cache[address]
-end
+  def perform_search(address)
+    return @cache[address] if @cache[address]
+    $stderr.puts "Cache miss: #{address}"
+    @cache[address] = uncached_perform_search(address)
+    @cache[address]
+  end
 
-def perform_search(address)
-  google = API_BASE.dup.tap do |u|
-    u.query = URI.encode_www_form(
-      address: address,
-      key: ENV['GOOGLE_API_TOKEN']
+  def extract_component(result, type)
+    component = result['address_components'].detect { |c| c['types'].include?(type) }
+
+    component['long_name'] if component
+  end
+
+  def persist
+    @cache.persist
+  end
+
+  def format_result(result, format_str)
+    format(
+      format_str,
+      street: extract_component(result, 'route'),
+      neighborhood: extract_component(result, 'neighborhood'),
+      city: extract_component(result, 'locality'),
+      county: extract_component(result, 'administrative_area_level_2'),
+      state: extract_component(result, 'administrative_area_level_1'),
+      country: extract_component(result, 'country'),
+      zip: extract_component(result, 'postal_code'),
+      formatted_address: result['formatted_address'],
+      lat: result['geometry']['location']['lat'],
+      lng: result['geometry']['location']['lng'],
     )
   end
 
-  Net::HTTP.start(google.host, google.port, use_ssl: true) do |http|
-    req = Net::HTTP::Get.new(google.request_uri)
-
-    resp = http.request(req)
-    raise "Request Failed: #{google}" unless resp.code.to_i < 300
-
-    results = JSON.parse(resp.body)['results']
-
-    $stderr.puts "More than 1 result for #{address}" if results.length > 1
-
-    if results.length.zero?
-      $stderr.puts "No results for #{address}"
-      return nil
+  def uncached_perform_search(address)
+    google = API_BASE.dup.tap do |u|
+      u.query = URI.encode_www_form(
+        address: address,
+        key: ENV['GOOGLE_API_TOKEN']
+      )
     end
 
-    results[0]
+    Net::HTTP.start(google.host, google.port, use_ssl: true) do |http|
+      req = Net::HTTP::Get.new(google.request_uri)
+
+      resp = http.request(req)
+      raise "Request Failed: #{google}" unless resp.code.to_i < 300
+
+      results = JSON.parse(resp.body)['results']
+
+      $stderr.puts "More than 1 result for #{address}" if results.length > 1
+
+      if results.length.zero?
+        $stderr.puts "No results for #{address}"
+        return nil
+      end
+
+      results[0]
+    end
   end
 end
 
-while (line = $stdin.gets)
-  address = line.strip
+if $PROGRAM_NAME == __FILE__
+  $stdout.sync = true
 
-  result = cached_perform_search(address)
+  options = {}
 
-  next unless result
+  OptionParser.new do |opts|
+    opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
 
-  if options[:format]
-    puts format_result(result, options[:format])
-  else
-    puts JSON.generate(result)
+    opts.on('--format=FORMAT', 'Format responses according to string. (%{county})') do |format|
+      options[:format] = format
+    end
+  end.parse!
+
+  geocoder = TomGeocoder.new
+
+  while (line = $stdin.gets)
+    address = line.strip
+
+    result = geocoder.perform_search(address)
+
+    next unless result
+
+    if options[:format]
+      puts geocoder.format_result(result, options[:format])
+    else
+      puts JSON.generate(result)
+    end
   end
 end
