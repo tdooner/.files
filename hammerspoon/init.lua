@@ -3,7 +3,7 @@ visible = {}
 num_keys = 0
 mouse_moves = 0
 
-local eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
   local modifiers = ""
   -- cmd+ctrl+alt+shift+fn
   if event:getFlags()['fn'] then
@@ -35,7 +35,7 @@ local eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(eve
   num_keys = num_keys + 1
 end)
 
-local mousetap = hs.eventtap.new({hs.eventtap.event.types.mouseMoved}, function(event)
+mousetap = hs.eventtap.new({hs.eventtap.event.types.mouseMoved}, function(event)
   mouse_moves = mouse_moves + 1
 end)
 
@@ -49,10 +49,12 @@ dumper = hs.timer.doEvery(300, function()
     contents.combos = combos
     contents.visible = visible
     contents.num_keys = num_keys
+  else
+    print(string.format("Not outputting keys because there are only %s", num_keys))
   end
 
   -- TODO: figure out how to parameterize this
-  local filename = string.format("/Users/tomdooner/Dropbox (Personal)/Apps/keystats/%s.json", now)
+  local filename = string.format("/Users/Tom/Dropbox (Personal)/Apps/keystats/%s.json", now)
   local file = assert(io.open(filename, 'w'))
   contents = hs.json.encode(contents)
   file:write(contents)
