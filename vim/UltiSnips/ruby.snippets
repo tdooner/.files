@@ -15,3 +15,18 @@ endsnippet
 snippet arlog "ActiveRecord logger" bm
 ActiveRecord::Base.logger = Logger.new($stderr)
 endsnippet
+
+snippet rs "rspec boilerplate" bm
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe $1 do
+  $2
+end
+endsnippet
+
+snippet fz "frozen string literal" bm
+# frozen_string_literal: true
+
+endsnippet
