@@ -151,7 +151,7 @@ nnoremap <Leader>d :GoDef<CR>
 
 " For NERD Tree
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
-let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 let g:neomake_list_height = 2     " this doesn't work but hopefully will someday
 let g:neomake_open_list = 2
