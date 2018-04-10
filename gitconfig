@@ -103,6 +103,8 @@
 
   from = !sh -c 'git fetch origin && git rebase origin/master' -
   fromi = !sh -c 'git fetch origin && git rebase -i origin/master' -
+  frum = !sh -c 'git fetch upstream && git rebase upstream/master' -
+  frumi = !sh -c 'git fetch upstream && git rebase -i upstream/master' -
   # fetch origin and rebase against origin master
 
   resom = !sh -c 'git fetch origin && git reset --hard origin/master' -
