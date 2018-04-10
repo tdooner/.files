@@ -83,7 +83,7 @@ set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=node_modules/**,vendor/**,env/**,**/bower_components/**,*.pyc,doc/**,tmp/**,target/**,coverage/**
+set wildignore+=*/node_modules/*,*/vendor/*,*/env/*,*/bower_components/*,*.pyc,doc/*,tmp/*,target/*,coverage/*
 syntax on
 colorscheme grb256
 
