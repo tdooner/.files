@@ -37,11 +37,10 @@ compile_plugins() {
     popd
   fi
 
-  if [ ! -f ~/.vim/bundle/command-t/ruby/command-t/ext.bundle ]; then
+  if [ ! -f ~/.vim/bundle/command-t/ruby/command-t/ext/command-t/ext.bundle ]; then
     echo 'Building Command-T shared object...'
-    pushd ~/.vim/bundle/command-t/ruby/command-t
+    pushd ~/.vim/bundle/command-t/ruby/command-t/ext/command-t
     eval "$(rbenv init -)"
-    rbenv shell system
     ruby extconf.rb
     make
     sudo make install
