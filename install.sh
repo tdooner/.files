@@ -43,6 +43,7 @@ bash ~/.files/install/vim.sh
 bash ~/.files/install/command-t.sh
 bash ~/.files/install/ycm.sh
 bash ~/.files/install/oh-my-zsh.sh
+bash ~/.files/install/fonts.sh
 
 if command -v zsh >/dev/null; then
   if [ ! $(echo $SHELL | grep 'zsh') ]; then
