@@ -164,7 +164,7 @@ let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
 let g:neomake_ruby_rubocop_args = ['--format', 'emacs', '-D']
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
-let g:neomake_javascript_eslint_exe = './node_modules/.bin/eslint'
+let g:neomake_javascript_eslint_exe = getcwd().'/node_modules/.bin/eslint'
 
 " let g:neomake_verbose = 3 " Debug information
 
