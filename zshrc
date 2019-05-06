@@ -32,14 +32,6 @@ play () {
   send-xbmc '{"jsonrpc": "2.0", "method": "Player.Open", "params":{"item":{"playlistid":0, "position" : 0}}, "id": 1}'
 }
 
-green() {
-  echo "$fg[green]$1$reset_color"
-}
-
-red() {
-  echo "$fg[red]$1$reset_color"
-}
-
 update () {
   local remote_sha1=$(cd ~/.files && git ls-remote origin refs/heads/master 2>/dev/null | cut -f1)
   local local_sha1=$(cd ~/.files && git sha1)
@@ -68,7 +60,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(git brew zeus rails colored-man-pages rbenv)
+plugins=(git brew zeus rails colored-man-pages rbenv pyenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -92,7 +84,7 @@ mesg n
 stty -ixon  # disable ctrl+s
 
 # Customize to your needs...
-export PATH=$HOME/bin:$GOPATH/bin:node_modules/.bin:$PATH
+export PATH=$HOME/bin:$GOPATH/bin:$PATH
 
 # Sanity check against mulitple rbenv installs:
 if [ -d "$HOME/.rbenv" -a -n "$RBENV_ROOT" -a "$RBENV_ROOT" != "$HOME/.rbenv" ]; then
@@ -101,3 +93,5 @@ fi
 
 [ -d "$HOME/.nodenv" ] && export PATH=$HOME/.nodenv/bin:$PATH
 if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

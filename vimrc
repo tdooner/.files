@@ -44,6 +44,10 @@ Plugin 'wincent/ferret'
 Plugin 'wincent/loupe'
 Plugin 'wlangstroth/vim-racket'
 
+" Typescript
+Plugin 'Quramy/tsuquyomi'
+Plugin 'leafgarland/typescript-vim'
+
 call vundle#end()
 filetype plugin indent on
 
@@ -79,11 +83,12 @@ set showbreak=>>
 set sidescrolloff=3
 set sw=2
 set swapfile
+set switchbuf=useopen    " allow re-opening buffer in multiple tabs
 set term=xterm-256color
 set ts=2
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=*/node_modules/*,*/vendor/*,*/env/*,*/bower_components/*,*.pyc,doc/*,tmp/*,target/*,coverage/*
+set wildignore+=*/node_modules/*,*/vendor/*,*/env/*,*/bower_components/*,*.pyc,*/doc/*,*/tmp/*,*/target/*,*/coverage/*
 syntax on
 colorscheme grb256
 

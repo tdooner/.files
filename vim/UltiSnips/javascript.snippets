@@ -1,29 +1,29 @@
 # vim: expandtab
 snippet cc "createClass" b
-const ${1:`!p
+import React, { PropTypes } from 'react';
+
+export default class ${1:`!p
 if snip.basename[0:5] == "index":
   snip.rv = re.sub('\.jsx?$', '', path).split('/')[-2]
 else:
-  snip.rv = ''.join(x.title() for x in re.sub('\.jsx?$', '', snip.basename).split('_'))`} = React.createClass({
-  propTypes: {
-  },
+  snip.rv = ''.join(re.sub('\.jsx?$', '', snip.basename).split('_'))`} extends React.Component {
+  static propTypes = {
+    $2
+  }
 
-  mixins: [
-    PureRenderDeepCompareMixin,
-  ],
+  constructor(props) {
+    super(props);
 
-  /**
-   * @return {Object}
-   */
+    this.state = {
+    };
+  }
+
   render() {
     return (
-      <div>
-      </div>
+      <div />
     );
   }
-});
-
-module.exports = $1;
+};
 endsnippet
 
 snippet pt "React.propTypes" b
