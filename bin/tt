@@ -11,6 +11,7 @@ command="$(which envdir) ${config_dir} zsh"
 # command and call the .tmux.local script with the appropriate project.)
 if [ ${1:-''} == 'first-open' ]; then
   tmux set-option default-command "$command"
+  tmux set-option set-titles-string "$project"
 
   # TODO: Add verification that .tmux.local hasn't changed nefariously since
   # the last run.
