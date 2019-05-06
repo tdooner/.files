@@ -5,24 +5,20 @@ COMMAND_T_ROOT="$HOME/.files/vim/bundle/command-t"
 
 build_command_t() {
   ruby_version=$1
-  cd "$COMMAND_T_ROOT/ruby/command-t"
+  cd "$COMMAND_T_ROOT/ruby/command-t/ext/command-t"
   rbenv local $ruby_version
   make clean
   ruby extconf.rb
   make
 }
 
+vim_ruby_link_version() {
+  vim -c ':set t_ti= t_te= nomore' -c ':ruby puts "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"' -cqall 2>/dev/null | \
+    grep -oE '[0-9\.]*-p[0-9]*'
+}
+
 if ! vim --version | grep -q '+ruby'; then
   echo 'ERROR: Could not install command-t -- vim built without ruby'
-fi
-
-ruby_link=$(vim --version | grep -oE -- '-L[^ ]+.rbenv[^ ]+' | head -n 1 || true)
-if [ -z "$ruby_link" ]; then
-  echo "CommandT: It appears that vim was compiled against system ruby"
-  ruby_link_version="system"
-else
-  ruby_link="${ruby_link:2}"
-  ruby_link_version=$(echo $ruby_link | grep -oE '[0-9]\.[0-9]\.[0-9]')
 fi
 
 if [ ! -d "$ruby_link" ]; then
