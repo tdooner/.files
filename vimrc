@@ -17,15 +17,14 @@ Plugin 'fatih/vim-go'
 Plugin 'godlygeek/tabular'
 Plugin 'groenewege/vim-less'
 Plugin 'jisaacks/GitGutter'
+Plugin 'jremmen/vim-ripgrep'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'majutsushi/tagbar'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'mxw/vim-jsx'
-Plugin 'neomake/neomake'
 Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'powerline/powerline'
-Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'solarnz/thrift.vim'
@@ -39,6 +38,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'w0rp/ale'
 Plugin 'wincent/command-t'
 Plugin 'wincent/ferret'
 Plugin 'wincent/loupe'
@@ -73,6 +73,7 @@ set listchars=tab:>-
 set linebreak            " line-break at word boundaries
 set nocompatible
 set number
+set regexpengine=1       " (magic?) increase vim responsiveness in iTerm significantly
 set relativenumber
 set scrolloff=5
 set softtabstop=2
@@ -93,6 +94,12 @@ syntax on
 colorscheme grb256
 
 highlight ColorColumn ctermbg=234
+
+" customize colors for ALE
+highlight ALEError ctermbg=52
+highlight ALEWarning ctermbg=58
+highlight ALEErrorSign ctermfg=52
+highlight ALEWarningSign ctermfg=58
 
 " Highlight extraneous whitespace.
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -158,31 +165,10 @@ nnoremap <Leader>d :GoDef<CR>
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
-let g:neomake_list_height = 2     " this doesn't work but hopefully will someday
-let g:neomake_open_list = 2
-let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
-let g:neomake_ruby_rubocop_args = ['--format', 'emacs', '-D']
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_jsx_enabled_makers = ['eslint']
-let g:neomake_javascript_eslint_exe = getcwd().'/node_modules/.bin/eslint'
-
-" let g:neomake_verbose = 3 " Debug information
-
 " For vim-rails
 let g:rails_projections = {
   \ "app/lib/*.rb": { "alternate": "spec/lib/{}_spec.rb" }
 \ }
-
-autocmd! BufWritePost * Neomake
-" get out of the the quickfix menu... there must be a discrepancy between
-" vim/neovim in how the location lists are created
-function SwitchBackIfInQuickfix()
-  if &buftype == 'quickfix'
-    wincmd p
-    exe "norm! 6\<C-Y>"
-  endif
-endfunction
-autocmd! User NeomakeFinished :call SwitchBackIfInQuickfix()
 
 " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
 " (via http://stackoverflow.com/a/22253548/1626737)
@@ -194,6 +180,9 @@ let g:UltiSnipsJumpForwardTrigger      = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
 let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+let g:ycm_filetype_blacklist = {
+    \ 'gitcommit': 1
+    \}
 
 function ConvertAttributes()
   %s!\(node\|default\)\.\(\w\+\)\.\(\w\+\)!\1['\2']['\3']!g
@@ -218,7 +207,3 @@ endfunction
 nnoremap <silent> gt :call GoNextTabOrBuffer()<CR>
 
 nnoremap <Leader>r :redraw!<CR>
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif

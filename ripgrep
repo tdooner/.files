@@ -1,0 +1,15 @@
+--sort=path
+--type-add=erb:*.erb
+--type-add=ruby:*.builder
+--type-add=ruby:*.rake
+--type-add=ruby:*.feature
+--type-add=js:*.jsx
+--type-add=css:*.css,*.scss
+--type-add=haml:*.haml
+--type-add=haml:*.hamljs
+--type-add=puppet:*.pp
+--type-add=sass:*.sass
+--type-add=txt:*.txt
+--type-add=walrus:*.tmpl
+--type-add=wikitext:*.wikitext
+--type-add=xcconfig:*.xcconfig

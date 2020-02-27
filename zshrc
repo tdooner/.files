@@ -64,11 +64,11 @@ plugins=(git brew zeus rails colored-man-pages rbenv pyenv)
 
 source $ZSH/oh-my-zsh.sh
 
-unalias rg
-
 export EDITOR=`which vim`
 export GIT_EDITOR=$EDITOR
 export GOPATH=$HOME/dev/go
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep"
+export LESS="-R"
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 

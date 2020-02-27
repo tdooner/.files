@@ -3,6 +3,8 @@
   email = tomdooner@gmail.com
 [includeIf "gitdir:~/dev/cfa/"]
   path = "~/.files/gitconfig-cfa"
+[includeIf "gitdir:~/dev/codeforamerica/"]
+  path = "~/.files/gitconfig-cfa"
 [help]
   autocorrect = 10
 [log]
