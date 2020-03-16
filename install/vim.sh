@@ -36,16 +36,6 @@ compile_plugins() {
     ./install.py
     popd
   fi
-
-  if [ ! -f ~/.vim/bundle/command-t/ruby/command-t/ext/command-t/ext.bundle ]; then
-    echo 'Building Command-T shared object...'
-    pushd ~/.vim/bundle/command-t/ruby/command-t/ext/command-t
-    eval "$(rbenv init -)"
-    ruby extconf.rb
-    make
-    sudo make install
-    popd
-  fi
 }
 
 if ! command -v vim >/dev/null; then
@@ -66,7 +56,3 @@ if $will_install; then
 fi
 
 vim +PluginInstall +qall
-
-if $will_install; then
-  compile_plugins
-fi
