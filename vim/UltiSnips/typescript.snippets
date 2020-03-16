@@ -1,0 +1,19 @@
+# vim:expandtab
+
+snippet sfc "React Stateless Functional Component" b
+import React from 'react';
+
+type ${1:`!p
+if snip.basename[0:5] == "index":
+  snip.rv = re.sub('\.tsx?$', '', path).split('/')[-2]
+else:
+  snip.rv = ''.join(x.title() for x in re.sub('\.tsx?$', '', snip.basename).split('_'))`}Props = {
+};
+
+const $1: React.SFC<$1Props> = (props) => {
+  return (
+    $2
+  );
+};
+export default $1;
+endsnippet
