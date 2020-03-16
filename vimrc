@@ -95,11 +95,7 @@ set ts=2
 set visualbell t_vb=             " disable bell sound and visual bell
 set wildmenu
 set wildmode=longest,list,full
-<<<<<<< HEAD
-set wildignore+=*/node_modules/*,*/vendor/*,*/env/*,*/bower_components/*,*.pyc,*/doc/*,*/tmp/*,*/target/*,*/coverage/*
-=======
 set wildignore+=*/node_modules/*,*/vendor/*,*/env/*,*/bower_components/*,*.pyc,doc/*,*/tmp/*,target/*,coverage/*
->>>>>>> Update vim experience for Javascript/Typescript
 syntax on
 colorscheme grb256
 
@@ -161,23 +157,16 @@ nnoremap <Leader>d :GoDef<CR>
 
 " For NERD Tree
 nnoremap <Leader><Leader> :NERDTreeFind<CR>
-<<<<<<< HEAD
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-=======
 let NERDTreeIgnore = ['\.pyc$', '__pycache__', 'node_modules']
->>>>>>> Update vim experience for Javascript/Typescript
 
 " For vim-rails
 let g:rails_projections = {
   \ "app/lib/*.rb": { "spec": "spec/lib/{}_spec.rb" }
 \ }
 
-<<<<<<< HEAD
-=======
 " For ale
 let g:ale_completion_enabled = 1
 
->>>>>>> Update vim experience for Javascript/Typescript
 " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
 " (via http://stackoverflow.com/a/22253548/1626737)
 " https://medium.com/brigade-engineering/sharpen-your-vim-with-snippets-767b693886db
@@ -189,16 +178,6 @@ let g:SuperTabCrMapping                = 0
 let g:UltiSnipsExpandTrigger           = '<tab>'
 let g:UltiSnipsJumpForwardTrigger      = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
-<<<<<<< HEAD
-let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
-let g:ycm_filetype_blacklist = {
-    \ 'gitcommit': 1
-    \}
-
-function ConvertAttributes()
-  %s!\(node\|default\)\.\(\w\+\)\.\(\w\+\)!\1['\2']['\3']!g
-endfunction
 
 function GoPreviousTabOrBuffer()
   if tabpagenr('$') == 1
@@ -219,9 +198,6 @@ endfunction
 nnoremap <silent> gt :call GoNextTabOrBuffer()<CR>
 
 nnoremap <Leader>r :redraw!<CR>
-=======
-
-nnoremap <Leader>r :redraw!<CR>
 
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -236,4 +212,3 @@ function LoadProjectVimConfig()
   endif
 endfunction
 call LoadProjectVimConfig()
->>>>>>> Update vim experience for Javascript/Typescript
