@@ -15,3 +15,5 @@ defaults write NSGlobalDomain KeyRepeat -int 2
 
 # Iterm2: Use preferences from this repo
 defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.files/iterm";
+# Iterm2: "Save changes to folder when iTerm2 quits"
+defaults write com.googlecode.iterm2 "NoSyncNeverRemindPrefsChangesLostForFile_selection" -bool false
