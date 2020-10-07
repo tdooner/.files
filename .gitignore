@@ -10,3 +10,4 @@ vim/tmp
 zshrc.local
 vim/bundle
 vim/ruby/command-t
+Brewfile.lock.json
