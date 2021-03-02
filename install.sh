@@ -36,6 +36,7 @@ install_symlink "$HOME/.gitignore" "$DOTDIR/gitignore"
 install_symlink "$HOME/.slate" "$DOTDIR/slate"
 install_symlink "$HOME/.hammerspoon" "$DOTDIR/hammerspoon"
 install_symlink "$HOME/.config/ripgrep" "$DOTDIR/ripgrep"
+install_symlink "$HOME/.gemrc" "$DOTDIR/gemrc"
 touch "$HOME/.zshrc.local"
 
 bash ~/.files/install/bin.sh
