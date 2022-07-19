@@ -22,6 +22,9 @@ export LESS="-S"
 
 export PYTHONPATH=$HOME/.vim/bundle/ropevim:$PYTHONPATH
 
+export GIT_DUET_GLOBAL=1 # Let Git-duet manage global git hooks to not conflict with overcommit
+export GIT_DUET_CO_AUTHORED_BY=1 # Add "Co-Authored-By" trailer when using `git duet-commit`
+
 send-xbmc () {
   curl -H "Content-Type: application/json" -XPOST -d $1 http://columbus:8080/jsonrpc > /dev/null
 }
@@ -95,3 +98,4 @@ fi
 if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/Users/tomdooner/dev/codeforamerica/gcf-backend:$PATH"

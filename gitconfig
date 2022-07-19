@@ -103,8 +103,8 @@
   rhu = reset --hard @{u}
   # useful rebasing your topic branch against the newest version of master
 
-  from = !sh -c 'git fetch origin && git rebase origin/master' -
-  fromi = !sh -c 'git fetch origin && git rebase -i origin/master' -
+  from = !sh -c 'git fetch origin && git rebase @{u}' -
+  fromi = !sh -c 'git fetch origin && git rebase -i @{u}' -
   frum = !sh -c 'git fetch upstream && git rebase upstream/master' -
   frumi = !sh -c 'git fetch upstream && git rebase -i upstream/master' -
   # fetch origin and rebase against origin master
@@ -136,6 +136,9 @@
 
   ridof = !sh -c 'wc -l $1 && git rm $1' -
   j = jira
+
+  # crappy reimplementation of git duet-commit?
+  dci = "!sh -c 'eval \"$(git duet)\" && if [ -n \"$GIT_COMMITTER_EMAIL\" ]; then git commit -v --trailer \"Co-Authored-By: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>\"; else git commit -v; fi'"
 [push]
   default = simple
 

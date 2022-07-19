@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 set -euo pipefail
 
 COMMAND_T_ROOT="$HOME/.files/vim/bundle/command-t"

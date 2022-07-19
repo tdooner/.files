@@ -17,3 +17,10 @@ defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.files/iterm";
 # Iterm2: "Save changes to folder when iTerm2 quits"
 defaults write com.googlecode.iterm2 "NoSyncNeverRemindPrefsChangesLostForFile_selection" -bool false
+
+
+# Menu Bar: "Show Volume in menu bar"
+# TODO: Debug this and figure out why it doesn't work
+# defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Volume.menu"
+# defaults write com.apple.systemuiserver -dict-add "NSStatusItem Visible com.apple.menuextra.volume" 1
+# TODO: Find setting to disable "Look up and data detectors"
