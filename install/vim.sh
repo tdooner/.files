@@ -55,4 +55,5 @@ if $will_install; then
   install_vim
 fi
 
+hash -r
 vim +PluginInstall +qall

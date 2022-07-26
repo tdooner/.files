@@ -96,6 +96,13 @@ fi
 
 [ -d "$HOME/.nodenv" ] && export PATH=$HOME/.nodenv/bin:$PATH
 if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
+if which rbenv >/dev/null 2>/dev/null; then eval "$(rbenv init -)"; fi
+
+if which brew >/dev/null 2>&1; then
+  eval "$(brew shellenv)"
+  export CPATH="$(brew --prefix)/include"
+  export LIBRARY_PATH="$(brew --prefix)/lib"
+fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="/Users/tomdooner/dev/codeforamerica/gcf-backend:$PATH"

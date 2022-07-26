@@ -7,7 +7,7 @@ COMMAND_T_ROOT="$HOME/.files/vim/bundle/command-t"
 build_command_t() {
   ruby_version=$1
   cd "$COMMAND_T_ROOT/ruby/command-t/ext/command-t"
-  export PATH="/usr/local/opt/ruby/bin:${PATH}" # ruby is installed here by homebrew
+  export PATH="$(brew --prefix)/opt/ruby/bin:${PATH}" # ruby is installed here by homebrew
   if [ -f Makefile ]; then
     make clean # if extconf.rb has been run already
   fi

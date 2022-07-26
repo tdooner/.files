@@ -6,8 +6,9 @@ defaults write com.apple.trackpad.forceClick -bool true
 defaults write com.apple.springing.enabled -bool true
 
 # Enable 3-finger dragging
-# TODO: Debug this and figure out why it doesn't work.
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+# TODO: Figure out why these don't work
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
 
 # Set a speedy key repeat interval
 defaults write NSGlobalDomain InitialKeyRepeat -int 25

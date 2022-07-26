@@ -21,6 +21,10 @@
   enabled = true
 [branch "master"]
   rebase = true
+[branch "main"]
+  rebase = true
+[pull]
+  rebase = true
 
 [diff]
 	compactionHeuristic = true
@@ -99,18 +103,18 @@
   # - local is already up to date
   # - local changes can be cleanly rebased on top of origin and fast-forwarded
 
-  rom = rebase origin/master
+  rom = rebase origin/main
   rhu = reset --hard @{u}
   # useful rebasing your topic branch against the newest version of master
 
   from = !sh -c 'git fetch origin && git rebase @{u}' -
   fromi = !sh -c 'git fetch origin && git rebase -i @{u}' -
-  frum = !sh -c 'git fetch upstream && git rebase upstream/master' -
-  frumi = !sh -c 'git fetch upstream && git rebase -i upstream/master' -
-  # fetch origin and rebase against origin master
+  frum = !sh -c 'git fetch upstream && git rebase upstream/main' -
+  frumi = !sh -c 'git fetch upstream && git rebase -i upstream/main' -
+  # fetch origin and rebase against origin main
 
-  resom = !sh -c 'git fetch origin && git reset --hard origin/master' -
-  # fetch origin and reset hard to origin/master
+  resom = !sh -c 'git fetch origin && git reset --hard origin/main' -
+  # fetch origin and reset hard to origin/main
 
   fixup = !sh -c 'parent=$(git rev-parse $1~1) && \
     git commit --fixup $1 && \
@@ -126,8 +130,8 @@
   ri = rebase --interactive --autosquash
   # perform an interactive rebase from a given commitish
 
-  fresh = !sh -c 'git fetch --all && git reset --hard origin/master' -
-  # fetch from all remotes and reset to origin/master
+  fresh = !sh -c 'git fetch --all && git reset --hard origin/main' -
+  # fetch from all remotes and reset to origin/main
 
   su = submodule update --init
   # update or initialize each submodule
