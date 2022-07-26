@@ -37,6 +37,7 @@ install_symlink "$HOME/.slate" "$DOTDIR/slate"
 install_symlink "$HOME/.hammerspoon" "$DOTDIR/hammerspoon"
 install_symlink "$HOME/.config/ripgrep" "$DOTDIR/ripgrep"
 install_symlink "$HOME/.gemrc" "$DOTDIR/gemrc"
+install_symlink "$HOME/.ideavimrc" "$DOTDIR/ideavimrc"
 touch "$HOME/.zshrc.local"
 
 bash ~/.files/install/bin.sh

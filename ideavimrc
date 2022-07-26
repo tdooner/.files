@@ -1,0 +1,60 @@
+" smart joining of lines
+" https://github.com/JetBrains/ideavim/wiki/%60ideajoin%60-examples
+set ideajoin
+
+let mapleader = ','
+nnoremap gf :action GotoDeclaration<CR>
+nnoremap <Leader>t :action GotoFile<CR>
+nnoremap <Leader>, :action SelectInProjectView<CR>
+"nnoremap <Leader>r :action Run<CR>
+nnoremap <Leader>/ :action CommentByLineComment<CR>
+
+" tab-switcher plugin
+nnoremap <C-h> :action TabShiftActions.MoveFocusLeft<CR>
+nnoremap <C-l> :action TabShiftActions.MoveFocusRight<CR>
+nnoremap <C-j> :action TabShiftActions.MoveFocusDown<CR>
+nnoremap <C-k> :action TabShiftActions.MoveFocusUp<CR>
+
+" default stuff from vimrc
+set autoread
+set autoindent
+set background=dark
+set backspace=2
+set backupdir=~/.files/vim/tmp//
+set breakindent          " vim8: indent broken lines to first line's indent level
+set breakindentopt=shift:2 " indent broken lines with additional two spaces
+set breakindentopt+=sbr    " use the 'showbreak' character
+set breakindentopt+=min:80 " ensure the wrapped line has a width of 80
+set colorcolumn=80
+set completeopt-=preview   " disable preview window for completion menu selections
+set completeopt+=noselect  " don't eagerly select first item in autocomplete menu
+set dir=~/.files/vim/tmp//
+set expandtab
+set foldlevelstart=1     " remind myself that folds exist
+set foldopen-=block      " allow { and } to not open folds
+set hlsearch
+set incsearch
+set laststatus=2
+set list
+set listchars=tab:>-
+set linebreak            " line-break at word boundaries
+set nocompatible
+set number
+set regexpengine=1       " (magic?) increase vim responsiveness in iTerm significantly
+set relativenumber
+set scrolloff=5
+set softtabstop=2
+set shiftround
+set shiftwidth=42
+set showtabline=2
+set showbreak=>>
+set sidescrolloff=3
+set sw=2
+set swapfile
+set switchbuf=useopen    " allow re-opening buffer in multiple tabs
+set term=xterm-256color
+set ts=2
+set visualbell t_vb=             " disable bell sound and visual bell
+set wildmenu
+set wildmode=longest,list,full
+set wildignore+=*/node_modules/*,*/vendor/*,*/env/*,*/bower_components/*,*.pyc,doc/*,*/tmp/*,target/*,coverage/*
