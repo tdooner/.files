@@ -22,7 +22,6 @@ export LESS="-S"
 
 export PYTHONPATH=$HOME/.vim/bundle/ropevim:$PYTHONPATH
 
-export GIT_DUET_GLOBAL=1 # Let Git-duet manage global git hooks to not conflict with overcommit
 export GIT_DUET_CO_AUTHORED_BY=1 # Add "Co-Authored-By" trailer when using `git duet-commit`
 
 send-xbmc () {

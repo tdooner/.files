@@ -143,6 +143,7 @@
 
   # crappy reimplementation of git duet-commit?
   dci = "!sh -c 'eval \"$(git duet)\" && if [ -n \"$GIT_COMMITTER_EMAIL\" ]; then git commit -v --trailer \"Co-Authored-By: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>\"; else git commit -v; fi'"
+  done = "!sh -c 'name=$(git branch --show-current); if [ $name = \"main\" ]; then echo \"Not deleting main!\"; else git checkout main; git branch -D \"$name\"; fi'"
 [push]
   default = simple
 
