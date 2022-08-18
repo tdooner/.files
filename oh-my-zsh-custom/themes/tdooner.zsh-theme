@@ -1,5 +1,8 @@
 source ~/.oh-my-zsh/themes/lukerandall.zsh-theme
 
+SHORT_USERNAME="${USERNAME%%@*}"
+PROMPT="%{$fg_bold[green]%}${SHORT_USERNAME}%{$reset_color%} %{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B»%b "
+
 # Look for any commits between upstream and here that have my git WIP pattern.
 function work_in_progress_tdooner() {
   if $(git log 'master@{u}...HEAD' 2>/dev/null | grep -q -c "\-\- WIP \-\-"); then
