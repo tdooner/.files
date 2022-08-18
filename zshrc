@@ -97,8 +97,8 @@ fi
 if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
 if which rbenv >/dev/null 2>/dev/null; then eval "$(rbenv init -)"; fi
 
-if which brew >/dev/null 2>&1; then
-  eval "$(brew shellenv)"
+if [ -f /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
   export CPATH="$(brew --prefix)/include"
   export LIBRARY_PATH="$(brew --prefix)/lib"
 fi

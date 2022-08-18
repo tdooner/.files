@@ -2,7 +2,7 @@
 set -euo pipefail
 
 is_on_mac=$(uname | grep -q Darwin && echo "true" || echo "false")
-has_brew_installed=$(command -v brew >/dev/null && echo "true" || echo "false")
+has_brew_installed=$([ -f /opt/homebrew/bin/brew ] && echo "true" || echo "false")
 
 deps=()
 ! command -v zsh >/dev/null && deps+=('zsh')
