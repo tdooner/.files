@@ -33,6 +33,7 @@ if [ $is_on_mac = "true" -a $has_brew_installed = "false" ]; then
 fi
 
 if [ $has_brew_installed = "true" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
   brew install "${deps[@]}"
   brew bundle
   hash -r # rehash
