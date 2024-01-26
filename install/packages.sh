@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-is_on_mac=$(uname | grep -q Darwin && echo "true" || echo "false")
 has_brew_installed=$([ -f /opt/homebrew/bin/brew ] && echo "true" || echo "false")
 
 deps=()
@@ -12,8 +11,8 @@ deps=()
 ! command -v cmake >/dev/null && deps+=('cmake')
 ! command -v rbenv >/dev/null && deps+=('rbenv')
 ! command -v tmux >/dev/null && deps+=('tmux')
-[ $is_on_mac = "true" ] && deps+=('python@3') # YouCompleteMe dependency
-[ $is_on_mac = "true" ] && deps+=('node')     # YouCompleteMe dependency
+[ $IS_ON_MAC = "true" ] && deps+=('python@3') # YouCompleteMe dependency
+[ $IS_ON_MAC = "true" ] && deps+=('node')     # YouCompleteMe dependency
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
@@ -24,8 +23,8 @@ if command -v apt-get >/dev/null; then
   sudo apt-get install "${deps[@]}"
 fi
 
-echo "is_on_mac: $is_on_mac / has_brew_installed: $has_brew_installed"
-if [ $is_on_mac = "true" -a $has_brew_installed = "false" ]; then
+echo "IS_ON_MAC: $IS_ON_MAC / has_brew_installed: $has_brew_installed"
+if [ $IS_ON_MAC = "true" -a $has_brew_installed = "false" ]; then
   echo "Installing homebrew package manager..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   eval "$(/opt/homebrew/bin/brew shellenv)"
