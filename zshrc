@@ -93,15 +93,16 @@ if [ -d "$HOME/.rbenv" -a -n "$RBENV_ROOT" -a "$RBENV_ROOT" != "$HOME/.rbenv" ];
   echo "ERROR: \$RBENV_ROOT points to $RBENV_ROOT, but you also have a ~/.rbenv directory"
 fi
 
-[ -d "$HOME/.nodenv" ] && export PATH=$HOME/.nodenv/bin:$PATH
-if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
-if which rbenv >/dev/null 2>/dev/null; then eval "$(rbenv init -)"; fi
-
 if [ -f /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
   export CPATH="$(brew --prefix)/include"
   export LIBRARY_PATH="$(brew --prefix)/lib"
 fi
 
+# This is after homebrew so versions installed by rbenv/nodenv are prioritized
+# over homebrew's versions.
+[ -d "$HOME/.nodenv" ] && export PATH=$HOME/.nodenv/bin:$PATH
+if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
+if which rbenv >/dev/null 2>/dev/null; then eval "$(rbenv init -)"; fi
+
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export PATH="/Users/tomdooner/dev/codeforamerica/gcf-backend:$PATH"
