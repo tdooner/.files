@@ -10,17 +10,14 @@ alias gd="git diff --color"
 alias g10="git log --pretty --oneline --graph -10"
 alias window="tmux rename-window"
 alias z="zeus"
-alias vmi="vim"
+alias vmi="nvim"
 alias k="bundle exec knife"
-alias vi="vim"
+alias vi="nvim"
+alias vim="nvim"
 alias sca="SKIP=all"
 alias migrate="bundle && bin/rake db:migrate && bin/rake db:migrate RAILS_ENV=test"
-#alias vvim="$(which vim)"
-#alias vim="nvim"
 
 export LESS="-S"
-
-export PYTHONPATH=$HOME/.vim/bundle/ropevim:$PYTHONPATH
 
 export GIT_DUET_CO_AUTHORED_BY=1 # Add "Co-Authored-By" trailer when using `git duet-commit`
 
@@ -66,7 +63,7 @@ plugins=(git brew zeus rails colored-man-pages rbenv pyenv)
 
 source $ZSH/oh-my-zsh.sh
 
-export EDITOR=`which vim`
+export EDITOR=`which nvim`
 export GIT_EDITOR=$EDITOR
 export GOPATH=$HOME/dev/go
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep"
