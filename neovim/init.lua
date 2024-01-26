@@ -1,7 +1,12 @@
+-- --------------------------------------------------------------------------
+-- Configuration
+-- --------------------------------------------------------------------------
 vim.g.mapleader = ','
+vim.o.shiftwidth = 2
+vim.o.relativenumber = true
 
 -- --------------------------------------------------------------------------
--- Lazy Package Manager
+-- Install Packages w/lazy.nvim
 -- --------------------------------------------------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -16,7 +21,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Command-T
 require("lazy").setup({
   {
     'wincent/command-t',
@@ -29,6 +33,15 @@ require("lazy").setup({
       vim.keymap.set('n', '<Leader>b', '<Plug>(CommandTBuffer)')
       vim.keymap.set('n', '<Leader>j', '<Plug>(CommandTJump)')
       vim.keymap.set('n', '<Leader>t', '<Plug>(CommandT)')
+    end,
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+      vim.cmd[[colorscheme tokyonight]]
     end,
   },
 }, opts)
