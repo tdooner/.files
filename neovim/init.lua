@@ -5,6 +5,11 @@ vim.g.mapleader = ','
 vim.o.shiftwidth = 2
 vim.o.relativenumber = true
 
+-- nvim-tree options
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
+
 -- --------------------------------------------------------------------------
 -- Install Packages w/lazy.nvim
 -- --------------------------------------------------------------------------
@@ -42,6 +47,13 @@ require("lazy").setup({
     opts = {},
     config = function()
       vim.cmd[[colorscheme tokyonight]]
+    end,
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    config = function()
+      require("nvim-tree").setup()
+      vim.keymap.set('n', '<Leader><Leader>', ':NvimTreeFindFile<CR>')
     end,
   },
 }, opts)
