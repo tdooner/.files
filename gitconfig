@@ -1,10 +1,8 @@
 [user]
   name = Tom Dooner
   email = tomdooner@gmail.com
-[includeIf "gitdir:~/dev/cfa/"]
-  path = "~/.files/gitconfig-cfa"
-[includeIf "gitdir:~/dev/codeforamerica/"]
-  path = "~/.files/gitconfig-cfa"
+[includeIf "gitdir:~/dev/nava/"]
+  path = "~/.files/gitconfig-work"
 [help]
   autocorrect = 10
 [log]
