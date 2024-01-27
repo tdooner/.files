@@ -2,8 +2,11 @@
 -- Configuration
 -- --------------------------------------------------------------------------
 vim.g.mapleader = ','
-vim.o.shiftwidth = 2
-vim.o.relativenumber = true
+vim.opt.shiftwidth = 2
+vim.opt.relativenumber = true
+vim.opt.wildignore:append{
+  '*/node_modules/*','*/vendor/*','*/env/*','*/bower_components/*','*.pyc','doc/*','*/tmp/*','target/*','coverage/*'
+}
 
 -- nvim-tree options
 vim.g.loaded_netrw = 1
@@ -56,4 +59,14 @@ require("lazy").setup({
       vim.keymap.set('n', '<Leader><Leader>', ':NvimTreeFindFile<CR>')
     end,
   },
+  {
+  "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
+    config = function()
+      require("typescript-tools").setup {}
+      -- TODO: Eventually configure this to just fix imports automatically on save or something.
+      vim.keymap.set('n', '<Leader>i', ':TSToolsAddMissingImports<CR>')
+    end,
+  }
 }, opts)
