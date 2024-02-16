@@ -11,6 +11,7 @@
   ui = auto
 [merge]
   log = 1000
+  conflictstyle = diff3
 [pager]
   show-branch = true
 [rebase]
@@ -28,6 +29,7 @@
 [diff]
   algorithm = histogram
   compactionHeuristic = true
+  colorMoved = default
 [apply]
   # automagically fix whitespace
   # see `man git-apply' for other options
@@ -38,6 +40,11 @@
   whitespace = trailing-space,space-before-tab
 [url "git@github.com:"]
   pushInsteadOf = "https://github.com/"
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  light = false
 
 [alias]
   st = status

@@ -12,8 +12,7 @@ deps=()
 ! command -v cmake >/dev/null && deps+=('cmake')
 ! command -v rbenv >/dev/null && deps+=('rbenv')
 ! command -v tmux >/dev/null && deps+=('tmux')
-[ $is_on_mac = "true" ] && deps+=('python@3') # YouCompleteMe dependency
-[ $is_on_mac = "true" ] && deps+=('node')     # YouCompleteMe dependency
+[ $is_on_mac = "true" ] && deps+=('git-delta')
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
