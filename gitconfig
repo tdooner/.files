@@ -23,19 +23,21 @@
   rebase = true
 [pull]
   rebase = true
-
+[push]
+  default = simple
 [diff]
-	compactionHeuristic = true
-
+  algorithm = histogram
+  compactionHeuristic = true
 [apply]
-  whitespace = fix
   # automagically fix whitespace
   # see `man git-apply' for other options
-
+  whitespace = fix
 [core]
   excludesfile = ~/.gitignore
+  pager = delta
   whitespace = trailing-space,space-before-tab
-	pager = less -R
+[url "git@github.com:"]
+  pushInsteadOf = "https://github.com/"
 
 [alias]
   st = status
@@ -142,8 +144,6 @@
   # crappy reimplementation of git duet-commit?
   dci = "!sh -c 'eval \"$(git duet)\" && if [ -n \"$GIT_COMMITTER_EMAIL\" ]; then git commit -v --trailer \"Co-Authored-By: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>\"; else git commit -v; fi'"
   done = "!sh -c 'name=$(git branch --show-current); if [ $name = \"main\" ]; then echo \"Not deleting main!\"; else git checkout main; git branch -D \"$name\"; fi'"
-[push]
-  default = simple
 
 [include]
   path = ~/.files/gitconfig-flynn
