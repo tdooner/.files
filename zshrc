@@ -19,17 +19,11 @@ alias migrate="bundle && bin/rake db:migrate && bin/rake db:migrate RAILS_ENV=te
 
 export LESS="-S"
 
+# Homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+# git-duet
 export GIT_DUET_CO_AUTHORED_BY=1 # Add "Co-Authored-By" trailer when using `git duet-commit`
-
-send-xbmc () {
-  curl -H "Content-Type: application/json" -XPOST -d $1 http://columbus:8080/jsonrpc > /dev/null
-}
-
-play () {
-  enqueue=$(echo '{"jsonrpc": "2.0", "method": "Playlist.Insert", "params":{"playlistid":0, "position": 0, "item" : { "file" : "plugin://plugin.video.youtube/?action=play_video&videoid='$1'" }}, "id" : 1}')
-  send-xbmc $enqueue
-  send-xbmc '{"jsonrpc": "2.0", "method": "Player.Open", "params":{"item":{"playlistid":0, "position" : 0}}, "id": 1}'
-}
 
 update () {
   local remote_sha1=$(cd ~/.files && git ls-remote origin refs/heads/master 2>/dev/null | cut -f1)
