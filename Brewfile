@@ -15,6 +15,7 @@ cask "kap"
 
 # For dev environment
 brew "heroku"
+brew "gnu-sed"
 brew "nodenv"
 brew "rbenv"
 brew "ripgrep"
