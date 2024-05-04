@@ -54,6 +54,7 @@
   add-unmerged = \
         "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 
+  prlog = log --format='- **%s**' origin/main..head
   oneline = log --oneline
   # e14d631 (HEAD, origin/master, origin/HEAD, master) Merge branch 'maint'
   # 0f64a5a Merge branch 'rr/misc-fixes'
