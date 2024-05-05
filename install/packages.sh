@@ -11,8 +11,6 @@ deps=()
 ! command -v cmake >/dev/null && deps+=('cmake')
 ! command -v rbenv >/dev/null && deps+=('rbenv')
 ! command -v tmux >/dev/null && deps+=('tmux')
-[ $IS_ON_MAC = "true" ] && deps+=('python@3') # YouCompleteMe dependency
-[ $IS_ON_MAC = "true" ] && deps+=('node')     # YouCompleteMe dependency
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
