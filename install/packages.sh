@@ -11,6 +11,7 @@ deps=()
 ! command -v cmake >/dev/null && deps+=('cmake')
 ! command -v rbenv >/dev/null && deps+=('rbenv')
 ! command -v tmux >/dev/null && deps+=('tmux')
+! command -v delta >/dev/null && deps+=('git-delta')
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
@@ -18,6 +19,7 @@ if [ "${#deps[@]}" -eq 0 ]; then
 fi
 
 if command -v apt-get >/dev/null; then
+  sudo apt-get update
   sudo apt-get install "${deps[@]}"
 fi
 

@@ -4,6 +4,7 @@ set -euo pipefail
 
 export DOTDIR="$( cd -- "$(dirname -- ${BASH_SOURCE[0]})" &>/dev/null && pwd )"
 export IS_ON_MAC=$(uname | grep -q Darwin && echo "true" || echo "false")
+export IS_IN_WSL=$(uname -a | grep -q WSL && echo "true" || echo "false")
 
 backup() {
   local file=$1
