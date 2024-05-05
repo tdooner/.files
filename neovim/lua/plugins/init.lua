@@ -29,36 +29,24 @@ return {
     end,
   },
   {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
-    config = function()
-      require("typescript-tools").setup {}
-      -- TODO: Eventually configure this to just fix imports automatically on save or something.
-      vim.keymap.set('n', '<Leader>i', ':TSToolsAddMissingImports<CR>')
-      vim.keymap.set('n', 'gf', ':TSToolsGoToSourceDefinition<CR>')
-    end,
-    settings = {
-    }
-  },
-  {
     "duane9/nvim-rg"
   },
   {
     "nvim-pack/nvim-spectre",
     config = function()
       vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-	desc = "Toggle Spectre"
+        desc = "Toggle Spectre"
       })
       vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-	desc = "Search current word"
+        desc = "Search current word"
       })
       vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-	desc = "Search current word"
+        desc = "Search current word"
       })
       vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-	desc = "Search on current file"
+        desc = "Search on current file"
       })
     end,
+    dependencies = { "nvim-lua/plenary.nvim" }
   }
 }

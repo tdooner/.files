@@ -36,6 +36,9 @@ update () {
 if [ $TMUX ]; then
   export SSH_AUTH_SOCK=$HOME/.ssh/auth
 else
+  if [ -z "${SSH_AUTH_SOCK:-""}" ]; then
+	eval "$(ssh-agent)" >/dev/null
+  fi
   ln -sf $SSH_AUTH_SOCK $HOME/.ssh/auth
 fi
 
@@ -69,8 +72,8 @@ export LESS="-R"
 set -o vi
 bindkey -v
 bindkey '^R' history-incremental-search-backward
-bindkey '^A' beginning-of-line
-bindkey '^E' end-of-line
+bindkey '^A' vi-beginning-of-line
+bindkey '^E' vi-end-of-line
 
 # This line is dedicated to Aaron Neyer:
 mesg n

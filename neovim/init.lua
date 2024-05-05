@@ -5,6 +5,7 @@ vim.g.mapleader = ','
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 4
 vim.opt.relativenumber = true
+vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.wildignore:append{
   '*/node_modules/*','*/vendor/*','*/env/*','*/bower_components/*','*.pyc','doc/*','*/tmp/*','target/*','coverage/*'
