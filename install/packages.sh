@@ -12,6 +12,7 @@ deps=()
 ! command -v rbenv >/dev/null && deps+=('rbenv')
 ! command -v tmux >/dev/null && deps+=('tmux')
 ! command -v delta >/dev/null && deps+=('git-delta')
+! command -v rg >/dev/null && deps+=('ripgrep')
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
