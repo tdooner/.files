@@ -3,6 +3,8 @@
   email = tomdooner@gmail.com
 [includeIf "gitdir:~/dev/nava/"]
   path = "~/.files/gitconfig-work"
+[init]
+  defaultBranch = main
 [help]
   autocorrect = 10
 [log]
