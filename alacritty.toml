@@ -1,0 +1,6 @@
+[window]
+dimensions = { columns = 185, lines = 60 }
+# decorations = "None"
+
+[font]
+size = 14
