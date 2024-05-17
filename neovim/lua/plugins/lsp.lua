@@ -71,6 +71,18 @@ return {
                 vim.keymap.set('n', '<Leader>i', '<cmd>lua vim.lsp.buf.code_action({apply = true, context = {only = { "source.addMissingImports.ts" }}})<cr>')
               end
             })
+          end,
+
+          lua_ls = function()
+            require('lspconfig').lua_ls.setup({
+              settings = {
+                Lua = {
+                  diagnostics = {
+                    globals = {"vim"}
+                  }
+                }
+              }
+            })
           end
         },
       })
