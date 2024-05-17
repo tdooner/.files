@@ -1,0 +1,3 @@
+# Don't ignore the .github dot directory, since it tends to have important
+# configuration
+!.github
