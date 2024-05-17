@@ -6,7 +6,10 @@ return {
       vim.g.CommandTPreferredImplementation = 'lua'
     end,
     config = function()
-      require('wincent.commandt').setup()
+      require('wincent.commandt').setup({
+        ignore_case = true,
+        smart_case = true
+      })
       vim.keymap.set('n', '<Leader>b', '<Plug>(CommandTBuffer)')
       vim.keymap.set('n', '<Leader>j', '<Plug>(CommandTJump)')
       vim.keymap.set('n', '<Leader>t', '<Plug>(CommandTRipgrep)')
@@ -24,7 +27,11 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     config = function()
-      require("nvim-tree").setup()
+      require("nvim-tree").setup({
+        filters = {
+          git_ignored = false
+        }
+      })
       vim.keymap.set('n', '<Leader><Leader>', ':NvimTreeFindFile<CR>')
     end,
   },
