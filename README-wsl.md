@@ -2,10 +2,10 @@
 
 1. Install guest OS: `wsl --install -d Ubuntu-24.04`
 2. Install Alacritty - https://alacritty.org/
-    * Create a shortcut for `alacritty.exe --command "wsl"`
-3. Map Caps Lock -> Control
+    * Create a shortcut for `C:\path\to\Alacritty.exe --config-file \\wsl.localhost\Ubuntu-24.04\home\tdooner\.files\alacritty.toml --command wsl`
+3. Set up keybindings to make Windows mimic Mac modifier keys
     * Install Powertoys
-    * Keyboard Manager > Remap "Caps Lock" to "Ctrl"/"None"
+    * Restore the backup in `powertoys-backup.zip`
 
 
 ## Troubleshooting
