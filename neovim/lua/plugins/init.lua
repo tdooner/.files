@@ -30,9 +30,21 @@ return {
       require("nvim-tree").setup({
         filters = {
           git_ignored = false
-        }
+        },
+        on_attach = function(bufnr)
+          local api = require('nvim-tree.api')
+          local function opts(desc)
+            return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+          end
+          api.config.mappings.default_on_attach(bufnr)
+
+          -- Split with vertical bar with Ctrl+Bar (actually backslash since shift isn't pressed)
+          vim.keymap.set('n', '<C-\\>', api.node.open.vertical, opts('Open: Split Vertically'))
+          -- Split with horizontal bar with Ctrl-Dash (doesn't work on windows)
+          vim.keymap.set('n', '<C-->', api.node.open.horizontal, opts('Open: Split Horizontally'))
+        end,
       })
-      vim.keymap.set('n', '<Leader><Leader>', ':NvimTreeFindFile<CR>')
+      vim.keymap.set('n', '<Leader><Leader>', ':NvimTreeFindFile!<CR>')
     end,
   },
   {
