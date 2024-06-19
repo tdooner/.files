@@ -6,6 +6,13 @@
 3. Set up keybindings to make Windows mimic Mac modifier keys
     * Install Powertoys
     * Restore the backup in `powertoys-backup.zip`
+4. WSL settings
+    * For docker, enable autoMemoryReclaim: https://learn.microsoft.com/en-us/windows/wsl/wsl-config#experimental-settings
+    ```
+    # C:\Users\<UserName>\.wslconfig
+    [experimental]
+    autoMemoryReclaim = gradual
+    ```
 
 
 ## Troubleshooting
