@@ -18,7 +18,7 @@
 [rebase]
   autosquash = true
 [rerere]
-  enabled = true
+ enabled = true
 [branch "master"]
   rebase = true
 [branch "main"]
@@ -52,7 +52,7 @@
   uncommit = "!bash -c \"git show --pretty=format:%B --quiet > /tmp/git-uncommit; git reset HEAD^\""
   recommit = "!bash -c \"git ci -F /tmp/git-uncommit\""
   edit-unmerged = \
-        "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+        "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; nvim `f`"
   add-unmerged = \
         "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 

@@ -58,7 +58,8 @@ return {
       -- -------------------------------------------------------------
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { "lua_ls", "tsserver" },
+        -- see: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md (left column)
+        ensure_installed = { "lua_ls", "tsserver", "terraformls", "ruby_lsp" },
         handlers = {
           function(server_name)
             require('lspconfig')[server_name].setup({})
@@ -83,7 +84,15 @@ return {
                 }
               }
             })
-          end
+          end,
+
+          ruby_lsp = function()
+            -- gem install ruby-lsp
+            -- gem install ruby-lsp-rspec
+            require('lspconfig').ruby_lsp.setup({
+              cmd = { vim.fn.expand("~/.rbenv/shims/ruby-lsp") }
+            })
+          end,
         },
       })
     end,
@@ -96,15 +105,4 @@ return {
       'L3MON4D3/LuaSnip',
     }
   },
-  {
-    "nvimtools/none-ls.nvim",
-    config = function()
-      local none_ls = require("null-ls")
-      none_ls.setup({
-        sources = {
-          none_ls.builtins.diagnostics.rubocop
-        }
-      })
-    end
-  }
 }

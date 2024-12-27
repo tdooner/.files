@@ -13,3 +13,4 @@
 --type-add=walrus:*.tmpl
 --type-add=wikitext:*.wikitext
 --type-add=xcconfig:*.xcconfig
+--max-columns=250

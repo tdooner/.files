@@ -29,7 +29,7 @@ return {
     config = function()
       require("nvim-tree").setup({
         filters = {
-          git_ignored = false
+          git_ignored = true
         },
         on_attach = function(bufnr)
           local api = require('nvim-tree.api')
@@ -42,6 +42,9 @@ return {
           vim.keymap.set('n', '<C-\\>', api.node.open.vertical, opts('Open: Split Vertically'))
           -- Split with horizontal bar with Ctrl-Dash (doesn't work on windows)
           vim.keymap.set('n', '<C-->', api.node.open.horizontal, opts('Open: Split Horizontally'))
+
+          -- Open help
+          vim.keymap.set('n', '?', function() vim.cmd('help nvim-tree-quickstart-help') end, opts('Open help'))
         end,
       })
       vim.keymap.set('n', '<Leader><Leader>', ':NvimTreeFindFile!<CR>')
@@ -65,7 +68,27 @@ return {
       vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
         desc = "Search on current file"
       })
+      require('spectre').setup({
+        highlight = {
+          search = "DiffDelete",
+          replace = "DiffAdd"
+        }
+      })
     end,
     dependencies = { "nvim-lua/plenary.nvim" }
-  }
+  },
+  {
+    "alexghergh/nvim-tmux-navigation",
+    config = function()
+      -- see: https://github.com/alexghergh/nvim-tmux-navigation?tab=readme-ov-file#neovim
+      local nvim_tmux_nav = require('nvim-tmux-navigation')
+
+      vim.keymap.set('n', "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
+      vim.keymap.set('n', "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
+      vim.keymap.set('n', "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
+      vim.keymap.set('n', "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+      vim.keymap.set('n', "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
+      vim.keymap.set('n', "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
+    end
+  },
 }
