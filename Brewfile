@@ -12,6 +12,7 @@ cask "rectangle"
 cask "slack"
 cask "spotify"
 cask "kap"
+brew "bluesnooze"
 
 # For dev environment
 brew "heroku"
