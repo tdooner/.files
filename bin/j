@@ -1,0 +1,128 @@
+#!/bin/bash
+# Version 0.1.0
+# TODO:
+# * Add initialization/configuration inputs
+#
+# Requirements:
+# * Jira CLI configured
+# * jq
+# * GNU sed (gsed)
+set -euo pipefail
+
+# CONFIGURATION:
+PROJECT="FFS"
+REPO_URL="https://github.com/DSACMS/iv-cbv-payroll"
+
+# INITIALIZATION
+ME=$(jira me || true)
+REPO_ROOT=$(git rev-parse --show-toplevel)
+if [ -z "$ME" ]; then
+  echo 'Error: Jira CLI not correctly configured. Ensure `jira me` returns successfully and retry.'
+  exit 1
+fi
+
+# HELPERS
+normalize_issue_name() {
+  local issue="$1"
+
+  # Convert all of these formats into "FFS-1234"
+  if [ "${issue:0:5}" = "https" ]; then
+    # https://.../FFS-1234
+    echo "$issue" | grep -oE "$PROJECT"'-\d+'
+  elif [ "${issue:0:${#PROJECT}}" = "$PROJECT" ]; then
+    # FFS-1234
+    echo -n "${issue}"
+  else
+    # 1234
+    echo -n "${PROJECT}-${issue}"
+  fi
+}
+
+render_pr_template() {
+  issue="$1"
+  tmpfile="$2"
+  template="$REPO_ROOT/.github/pull_request_template.md"
+
+  exec 3< <(
+    # Format the commits for this branch like:
+    #
+    # **Commit title**
+    # > Commit body
+    git log --reverse origin/main..HEAD --pretty='format:**%s**%n%b' | gsed '/^\(\*\*\|$\)/!s/^/> /'
+  )
+  gsed '/What was added/r /dev/fd/3' "$template" > "$tmpfile"
+  exec 3<&-
+
+  # Replace FFS-XXXX placeholders in the Github template
+  sed -i'' -e "s/FFS-XXXX/$issue/g" "$tmpfile"
+}
+
+branch_name() {
+  local issue="$1"
+
+  issue_title="$(jira issue view "$issue" --raw | jq --raw-output .fields.summary)"
+  sluggy_title=$(echo "$issue_title" |
+    sed -E 's/(\[.*\])//g' |                            # Remove "[Some tag]" types of things from titles
+    sed -E 's/[^a-zA-Z0-9]/ /g' |                       # Replace non-alpha-numerics with spaces
+    sed -E 's/(^[ ]+|[ ]+$)//g' |                       # Remove leading or trailing spaces
+    sed -E 's/ (and|or|a|an|the|with|for|is|to) / /g' | # Remove common words
+    cut -d " " -f 1-5 |                                 # Take the first 5 words only
+    sed -E 's/[ ]+/-/g'                                 # Convert spaces to dashes
+  )
+
+  echo "${BRANCH_PREFIX}/${issue}-${sluggy_title}" \
+    | tr '[:upper:]' '[:lower:]'    # Lowercase any capitals
+}
+
+# COMMANDS
+start_issue() {
+  local issue="$1"
+  local branch=$(branch_name "$issue")
+
+  echo "Starting issue $1... (branch: $branch)"
+  git checkout -b "$branch" origin/main
+  jira issue move "$issue" "In Progress" -a"$ME"
+}
+
+case $1 in
+  start)
+    if [ $# -ne 2 ]; then
+      echo "Usage: $(basename $0) start FFS-1234"
+      exit 1
+    fi
+    ISSUE=$(normalize_issue_name "$2")
+    if [ -z "${ISSUE}" ]; then
+      echo "Usage: $(basename $0) start FFS-1234"
+      exit 1
+    fi
+    start_issue "$ISSUE"
+    ;;
+  commit)
+    issue=$(git branch --show-current | sed -E 's#^[a-z]*/([a-z]*-[0-9]*)-(.*)$#\1#' | tr '[:lower:]' '[:upper:]')
+    issue_title="$(jira issue view "$issue" --raw | jq --raw-output .fields.summary)"
+    pr_template=$(mktemp)
+    trap "rm -f $pr_template" EXIT
+    render_pr_template "$issue" "$pr_template"
+
+    gh pr create --body-file "$pr_template" --title "${issue}: ${issue_title}" --web
+    ;;
+  mine)
+    exec jira issue list -a"$ME" -s~Canceled -s~Done
+    ;;
+  close-merged)
+    open_issues=$(jira issue list -s"To Do" -s"In Progress" -s"In Review" -a"$ME" --columns=KEY --no-headers --plain)
+    git fetch origin
+    for issue in $open_issues; do
+      issue_number=$(echo $issue | sed -E 's/^('$PROJECT'-)([0-9]+)$/\2:/') # "FFS-1234" --> "1234:"
+      matching_commit=$(git log origin/main --format=oneline --no-decorate -E --grep '^('$PROJECT'-)?'$issue_number)
+      if [ -n "$matching_commit" ]; then
+        echo "Found commit matching FFS-$issue_number. Completing the issue with a link to the commit."
+        jira issue move "$issue" "Done" --resolution "Done" \
+          --comment "Completed via $REPO_URL/commit/$(echo $matching_commit | cut -d" " -f1)"
+      fi
+    done
+    ;;
+  *)
+    echo "Usage: $(basename $0) [start|commit|mine|close-merged]"
+    ;;
+esac
