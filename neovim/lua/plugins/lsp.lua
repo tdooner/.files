@@ -10,6 +10,10 @@ return {
       cmp.setup({
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'minuet' }, -- TODO: Can this be added dynamically in ai.lua?
+        },
+        performance = {
+          fetching_timeout = 3000 -- for AI delays
         },
         mapping = {
           ['<C-e>'] = cmp.mapping.abort(),
@@ -17,14 +21,14 @@ return {
             if cmp.visible() then
               cmp.select_next_item({behavior = 'insert'})
             else
-              cmp.complete()
+              -- cmp.complete()
             end
           end),
           ['<C-k>'] = cmp.mapping(function()
             if cmp.visible() then
               cmp.select_prev_item({behavior = 'insert'})
             else
-              cmp.complete()
+              -- cmp.complete()
             end
           end),
         },
@@ -59,14 +63,14 @@ return {
       require('mason').setup({})
       require('mason-lspconfig').setup({
         -- see: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md (left column)
-        ensure_installed = { "lua_ls", "tsserver", "terraformls", "ruby_lsp" },
+        ensure_installed = { "lua_ls", "ts_ls", "terraformls", "ruby_lsp" },
         handlers = {
           function(server_name)
             require('lspconfig')[server_name].setup({})
           end,
 
-          tsserver = function()
-            require('lspconfig').tsserver.setup({
+          ts_ls = function()
+            require('lspconfig').ts_ls.setup({
               on_attach = function(client, bufnr)
                 -- fix imports (thanks: https://www.reddit.com/r/neovim/comments/192jxlv/comment/kh2zwdx/)
                 vim.keymap.set('n', '<Leader>i', '<cmd>lua vim.lsp.buf.code_action({apply = true, context = {only = { "source.addMissingImports.ts" }}})<cr>')

@@ -12,6 +12,7 @@ set -euo pipefail
 # CONFIGURATION:
 PROJECT="FFS"
 REPO_URL="https://github.com/DSACMS/iv-cbv-payroll"
+SPRINT_FIELD_NAME="Sprint"
 
 # INITIALIZATION
 ME=$(jira me || true)
@@ -22,20 +23,38 @@ if [ -z "$ME" ]; then
 fi
 
 # HELPERS
+jira_custom_field_id() {
+  local field_name="$1"
+  ruby -r yaml -e '
+    jira_config = YAML.load_file(File.expand_path("~/.config/.jira/.config.yml"))
+    field = jira_config["issue"]["fields"]["custom"].find { |f| f["name"] == "'$field_name'" }
+
+    if field && field["schema"]["datatype"] == "number"
+      puts field["key"]
+    elsif field && field["schema"]["datatype"] == "array"
+      raise "You need to set \"datatype: number\" for the Sprint field in your ~/.config/.jira/.config.yml"
+    else
+      raise "Could not find JIRA Custom field: '$field_name'"
+    end
+  '
+}
+
 normalize_issue_name() {
   local issue="$1"
 
+  shopt -s nocasematch
   # Convert all of these formats into "FFS-1234"
   if [ "${issue:0:5}" = "https" ]; then
     # https://.../FFS-1234
     echo "$issue" | grep -oE "$PROJECT"'-\d+'
-  elif [ "${issue:0:${#PROJECT}}" = "$PROJECT" ]; then
+  elif [[ "${issue:0:${#PROJECT}}" = "$PROJECT" ]]; then
     # FFS-1234
-    echo -n "${issue}"
+    echo -n "${issue}" | tr "[:lower:]" "[:upper:]"
   else
     # 1234
     echo -n "${PROJECT}-${issue}"
   fi
+  set -u nocasematch
 }
 
 render_pr_template() {
@@ -79,6 +98,19 @@ start_issue() {
   local issue="$1"
   local branch=$(branch_name "$issue")
 
+  # Check whether issue is in current sprint
+  # sprint_field=$(jira_custom_field_id $SPRINT_FIELD_NAME)
+  # issue_sprints=$(jira issue show "$issue" --raw | jq -r '.fields.'$sprint_field' // [] | map(scan("id=([0-9]+)")) | flatten | join("\n")')
+  # current_sprint_id=$(jira sprint list --state active --plain --table --no-headers | cut -f1)
+  # if ! grep -q $current_sprint_id <(echo "$issue_sprints"); then
+  #   current_sprint_name=$(jira sprint list --state active --plain --table --no-headers | cut -f2)
+  #   slugged_sprint_field_name=$(echo $SPRINT_FIELD_NAME | tr "[:upper:] " "[:lower:]-")
+
+  #   echo "Issue $1 is not in current sprint '$current_sprint_name'. Adding to sprint..."
+  #   jira issue update "$issue" --custom "$slugged_sprint_field_name"="$current_sprint_id" --no-input
+  # fi
+
+  # Start the issue
   echo "Starting issue $1... (branch: $branch)"
   git checkout -b "$branch" origin/main
   jira issue move "$issue" "In Progress" -a"$ME"
@@ -97,7 +129,7 @@ case $1 in
     fi
     start_issue "$ISSUE"
     ;;
-  commit)
+  pr)
     issue=$(git branch --show-current | sed -E 's#^[a-z]*/([a-z]*-[0-9]*)-(.*)$#\1#' | tr '[:lower:]' '[:upper:]')
     issue_title="$(jira issue view "$issue" --raw | jq --raw-output .fields.summary)"
     pr_template=$(mktemp)
@@ -107,7 +139,7 @@ case $1 in
     gh pr create --body-file "$pr_template" --title "${issue}: ${issue_title}" --web
     ;;
   mine)
-    exec jira issue list -a"$ME" -s~Canceled -s~Done
+    exec jira issue list -a"$ME" -s~Canceled -s~Done --columns TYPE,KEY,SUMMARY,STATUS,LABELS,UPDATED
     ;;
   close-merged)
     open_issues=$(jira issue list -s"To Do" -s"In Progress" -s"In Review" -a"$ME" --columns=KEY --no-headers --plain)
@@ -123,6 +155,6 @@ case $1 in
     done
     ;;
   *)
-    echo "Usage: $(basename $0) [start|commit|mine|close-merged]"
+    echo "Usage: $(basename $0) [start|pr|mine|close-merged]"
     ;;
 esac
