@@ -23,6 +23,11 @@ if [ -z "$ME" ]; then
 fi
 
 # HELPERS
+green() {
+  local text="$1"
+  echo -e "\033[0;32m${text}\033[0m"
+}
+
 jira_custom_field_id() {
   local field_name="$1"
   ruby -r yaml -e '
@@ -111,8 +116,13 @@ start_issue() {
   # fi
 
   # Start the issue
-  echo "Starting issue $1... (branch: $branch)"
-  git checkout -b "$branch" origin/main
+  echo "Starting issue $1... (branch: $(green "$branch"))"
+  if [ "$(git branch --show-current)" = "$branch" ]; then
+    echo "Already on branch! Skipping git branch creation/checkout."
+  else
+    git checkout -b "$branch" origin/main
+  fi
+
   jira issue move "$issue" "In Progress" -a"$ME"
 }
 
