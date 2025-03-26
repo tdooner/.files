@@ -100,3 +100,14 @@ if which nodenv >/dev/null 2>/dev/null; then eval "$(nodenv init -)"; fi
 if which rbenv >/dev/null 2>/dev/null; then eval "$(rbenv init -)"; fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Delta (diff tool)
+#
+# Most config is in .gitconfig, but enable side-by-side mode via environment
+# variable so it can be disabled dynamically.
+#
+# Disable it by prefixing a command with `unified`, like:
+#   unified git show
+export DELTA_FEATURES="+side-by-side"
+unified() { eval "DELTA_FEATURES=+ $@" }
+nodelta() { eval "GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.pager GIT_CONFIG_VALUE_0= $@" }

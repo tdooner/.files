@@ -1,3 +1,4 @@
+# vim: ft=gitconfig
 [user]
   name = Tom Dooner
   email = tomdooner@gmail.com
@@ -30,13 +31,13 @@
 [diff]
   algorithm = histogram
   compactionHeuristic = true
+  colorMoved = dimmed-zebra # requires git >= 2.17
 [apply]
   # automagically fix whitespace
   # see `man git-apply' for other options
   whitespace = fix
 [core]
   excludesfile = ~/.gitignore
-  pager = delta
   whitespace = trailing-space,space-before-tab
 [url "git@github.com:"]
   pushInsteadOf = "https://github.com/"
@@ -148,5 +149,35 @@
   dci = "!sh -c 'eval \"$(git duet)\" && if [ -n \"$GIT_COMMITTER_EMAIL\" ]; then git commit -v --trailer \"Co-Authored-By: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>\"; else git commit -v; fi'"
   done = "!sh -c 'name=$(git branch --show-current); if [ $name = \"main\" ]; then echo \"Not deleting main!\"; else git checkout main; git branch -D \"$name\"; fi'"
 
+# #############################################################################
+# Delta diff tool configuration:
+# #############################################################################
+[core]
+  pager = delta
+[color "diff"]
+   oldMovedDimmed = italic "#c4948d" # https://colorkit.io/#b83019-#c7c7c7-7
+   newMovedDimmed = italic "#a1c397" # https://colorkit.io/#51bf37-#c7c7c7-7
 [include]
-  path = ~/.files/gitconfig-flynn
+  path = "~/.local/share/nvim/lazy/tokyonight.nvim/extras/delta/tokyonight_moon.gitconfig"
+[delta]
+  navigate = true                           # use n and N to navigate different sections
+  hyperlinks = true                         # hyperlink git commits and filenames/line numbers
+  hyperlinks-file-link-format = ""          # disable hyperlinking for filenames/line numbers until I set it up
+
+  # Theming options
+  # Hex colors are from:
+  # https://github.com/folke/tokyonight.nvim/blob/057ef5d260/lua/tokyonight/colors/moon.lua
+  theme = "tokyonight_moon"
+  syntax-theme = "OneHalfDark"
+  blame-format = "{timestamp:<15} {author:<15.14} {commit:<8} "  # Add space after the commit hash for easier copypaste
+  file-decoration-style = "#3b4261 box"     # fg_gutter
+  file-style = "#c8d3f5"                    # fg
+  hunk-header-decoration-style = "#3b4261 ul" # fg_gutter
+  hunk-header-style = "#89ddff"             # blue5
+  line-numbers-left-style = "#3b4261"       # fg_gutter
+  line-numbers-right-style = "#3b4261"      # fg_gutter
+
+  # Syntax highlighting for git moved hunks
+  # Color #231723 - 40% darker #3a273a: https://mdigi.tools/darken-color/#3a273a
+  # Color #17222c - 40% darker #273849: https://mdigi.tools/darken-color/#273849
+  map-styles = "italic #c4948d => syntax #231723, italic #a1c397 => syntax #17222c"
