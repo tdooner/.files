@@ -63,7 +63,7 @@ return {
       require('mason').setup({})
       require('mason-lspconfig').setup({
         -- see: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md (left column)
-        ensure_installed = { "lua_ls", "ts_ls", "terraformls", "ruby_lsp" },
+        ensure_installed = { "lua_ls", "ts_ls", "terraformls", "ruby_lsp", "bashls" },
         handlers = {
           function(server_name)
             require('lspconfig')[server_name].setup({})

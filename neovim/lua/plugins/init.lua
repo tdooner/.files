@@ -91,4 +91,21 @@ return {
       vim.keymap.set('n', "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
     end
   },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    -- Verify with :TSInstallInfo
+    config = function()
+      local configs = require("nvim-treesitter.configs")
+      configs.setup({
+        ensure_installed = { "ruby", "markdown", "yaml", "hcl" },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false
+        },
+        indent = {
+          enable = true
+        }
+      })
+    end
+  }
 }
