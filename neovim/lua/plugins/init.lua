@@ -41,7 +41,8 @@ return {
           -- Split with vertical bar with Ctrl+Bar (actually backslash since shift isn't pressed)
           vim.keymap.set('n', '<C-\\>', api.node.open.vertical, opts('Open: Split Vertically'))
           -- Split with horizontal bar with Ctrl-Dash (doesn't work on windows)
-          vim.keymap.set('n', '<C-->', api.node.open.horizontal, opts('Open: Split Horizontally'))
+          -- On Mac (at least), the dash comes through as as underscore.
+          vim.keymap.set('n', '<C-_>', api.node.open.horizontal, opts('Open: Split Horizontally'))
 
           -- Open help
           vim.keymap.set('n', '?', function() vim.cmd('help nvim-tree-quickstart-help') end, opts('Open help'))
