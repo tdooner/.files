@@ -13,6 +13,7 @@ deps=()
 ! command -v tmux >/dev/null && deps+=('tmux')
 ! command -v delta >/dev/null && deps+=('git-delta')
 ! command -v rg >/dev/null && deps+=('ripgrep')
+! command -v watchman >/dev/null && deps+=('watchman')          # dependency of sorbet LSP
 
 if [ "${#deps[@]}" -eq 0 ]; then
   echo 'No packages to install.'
