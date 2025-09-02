@@ -1,6 +1,12 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_CUSTOM="$HOME/.files/oh-my-zsh-custom"
-ZSH_THEME="tdooner"
+
+if [[ -n "$CURSOR_AGENT" ]]; then
+  ZSH_THEME=""
+  PROMPT='%n@%m:%~%# '
+else
+  ZSH_THEME="tdooner"
+fi
 
 alias be="bundle exec"
 alias rr="[[ -e .zeus.sock ]] && zeus rake routes || bundle exec rake routes"

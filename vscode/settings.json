@@ -1,0 +1,27 @@
+{
+    "window.commandCenter": true,
+    "workbench.colorTheme": "Cursor Dark Midnight",
+    "terminal.integrated.scrollback": 400,
+    "window.menuBarVisibility": "compact",
+    "vim.handleKeys": {
+        "<C-d>": true,
+        "<C-s>": false,
+        "<C-z>": false,
+        "<C-p>": false,
+        "<C-b>": false,
+        "<C-w>": false
+    },
+    "cursor.composer.usageSummaryDisplay": "always",
+    "vim.leader": ",",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<leader>", "t"],
+            "commands": [
+                {
+                    "command": "workbench.action.quickOpen"
+                }
+            ]
+        }
+    ],
+    "editor.guides.indentation": false
+}
