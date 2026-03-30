@@ -7,6 +7,10 @@
 # * Jira CLI configured
 # * jq
 # * GNU sed (gsed)
+#
+# brew tap atlassian/homebrew-acli
+# brew install acli
+# echo "$JIRA_API_TOKEN" | acli jira auth login --site "jiraent.cms.gov" --email "thomas.dooner@cms.hhs.gov" --token
 set -euo pipefail
 
 # CONFIGURATION:
@@ -37,12 +41,28 @@ jira_custom_field_id() {
     if field && field["schema"]["datatype"] == "number"
       puts field["key"]
     elsif field && field["schema"]["datatype"] == "array"
-      raise "You need to set \"datatype: number\" for the Sprint field in your ~/.config/.jira/.config.yml"
+      if field["name"] == "'$SPRINT_FIELD_NAME'"
+        raise "You need to set \"datatype: number\" for the Sprint field in your ~/.config/.jira/.config.yml"
+      else
+        puts field["key"]
+      end
     else
       raise "Could not find JIRA Custom field: '$field_name'"
     end
   '
 }
+
+# TODO: Revisit after https://github.com/ankitpokhrel/jira-cli/pull/661 lands
+# jira_issue_update_custom_field() {
+#   local issue_key="$1"
+#   local field_name="$2"
+#   local field_value="$3"
+#
+#   field_id=$(jira_custom_field_id "$field_name")
+#
+#   echo "Updating ${issue_key}, setting ${field_name} ($field_id) = $field_value."
+#   jira issue update "$issue_key" --custom "$field_id"="$field_value" --no-input
+# }
 
 normalize_issue_name() {
   local issue="$1"
@@ -89,13 +109,29 @@ branch_name() {
     sed -E 's/(\[.*\])//g' |                            # Remove "[Some tag]" types of things from titles
     sed -E 's/[^a-zA-Z0-9]/ /g' |                       # Replace non-alpha-numerics with spaces
     sed -E 's/(^[ ]+|[ ]+$)//g' |                       # Remove leading or trailing spaces
-    sed -E 's/ (and|or|a|an|the|with|for|is|to) / /g' | # Remove common words
-    cut -d " " -f 1-5 |                                 # Take the first 5 words only
-    sed -E 's/[ ]+/-/g'                                 # Convert spaces to dashes
+    sed -E 's/ (and|or|a|an|the|with|for|is|to|are|which|in|on) / /g' | # Remove common words
+    cut -d " " -f 1-6 |                                 # Take the first 6 words only
+    sed -E 's/[ ]+/-/g' |                               # Convert spaces to dashes
+    sed -E 's/[\-]*$//g'                                # Remove trailing dash
   )
 
   echo "${BRANCH_PREFIX}/${issue}-${sluggy_title}" \
     | tr '[:upper:]' '[:lower:]'    # Lowercase any capitals
+}
+
+# Parse the git branch name and return the issue number, e.g. "FFS-1234"
+issue_from_branch_name() {
+  git branch --show-current |
+    sed -E 's#^[a-z]*/([a-z]*-[0-9]*)-(.*)$#\1#i' |
+    tr '[:lower:]' '[:upper:]'
+}
+
+github_to_jira_username() {
+  local github_username=$1
+
+  reviewer_jira=$(sed -nr 's/.*'"$github_username"'.*Jira: ([A-Z0-9]*)/\1/p' "$REPO_ROOT/.github/reviewer-lottery.yml")
+
+  echo "$reviewer_jira"
 }
 
 # COMMANDS
@@ -104,16 +140,16 @@ start_issue() {
   local branch=$(branch_name "$issue")
 
   # Check whether issue is in current sprint
-  # sprint_field=$(jira_custom_field_id $SPRINT_FIELD_NAME)
-  # issue_sprints=$(jira issue show "$issue" --raw | jq -r '.fields.'$sprint_field' // [] | map(scan("id=([0-9]+)")) | flatten | join("\n")')
-  # current_sprint_id=$(jira sprint list --state active --plain --table --no-headers | cut -f1)
-  # if ! grep -q $current_sprint_id <(echo "$issue_sprints"); then
-  #   current_sprint_name=$(jira sprint list --state active --plain --table --no-headers | cut -f2)
-  #   slugged_sprint_field_name=$(echo $SPRINT_FIELD_NAME | tr "[:upper:] " "[:lower:]-")
+  sprint_field=$(jira_custom_field_id $SPRINT_FIELD_NAME)
+  issue_sprints=$(jira issue show "$issue" --raw | jq -r '.fields.'$sprint_field' // [] | map(scan("id=([0-9]+)")) | flatten | join("\n")')
+  current_sprint_id=$(jira sprint list --state active --plain --table --no-headers --order-by start | cut -f1 | head -n1)
+  if ! grep -q "$current_sprint_id" <(echo "$issue_sprints"); then
+    current_sprint_name=$(jira sprint list --state active --plain --table --no-headers | cut -f2 | head -n1)
+    slugged_sprint_field_name=$(echo $SPRINT_FIELD_NAME | tr "[:upper:] " "[:lower:]-")
 
-  #   echo "Issue $1 is not in current sprint '$current_sprint_name'. Adding to sprint..."
-  #   jira issue update "$issue" --custom "$slugged_sprint_field_name"="$current_sprint_id" --no-input
-  # fi
+    echo "Issue $1 is not in current sprint '$current_sprint_name'. Adding to sprint..."
+    jira issue update "$issue" --custom "$slugged_sprint_field_name"="$current_sprint_id" --no-input
+  fi
 
   # Start the issue
   echo "Starting issue $1... (branch: $(green "$branch"))"
@@ -124,6 +160,8 @@ start_issue() {
   fi
 
   jira issue move "$issue" "In Progress" -a"$ME"
+  jira issue show "$issue" --plain > "${REPO_ROOT}/app/tmp/TICKET.md"
+  rm -f "${REPO_ROOT}/app/tmp/DESIGN.svg" 2>/dev/null
 }
 
 case $1 in
@@ -140,13 +178,28 @@ case $1 in
     start_issue "$ISSUE"
     ;;
   pr)
-    issue=$(git branch --show-current | sed -E 's#^[a-z]*/([a-z]*-[0-9]*)-(.*)$#\1#' | tr '[:lower:]' '[:upper:]')
+    issue="$(issue_from_branch_name)"
+    if [ -z "$issue" ] || [ "$issue" = "MAIN" ]; then
+      echo "Not on a Jira issue branch?"
+      exit 1
+    fi
     issue_title="$(jira issue view "$issue" --raw | jq --raw-output .fields.summary)"
     pr_template=$(mktemp)
     trap "rm -f $pr_template" EXIT
     render_pr_template "$issue" "$pr_template"
 
     gh pr create --body-file "$pr_template" --title "${issue}: ${issue_title}" --web
+
+    echo "Add a Jira comment with the PR URL? Paste it here (or hit RETURN to skip): "
+    read -r pr_url
+    if [[ $pr_url == "https://github.com"* ]]; then
+      jira issue move "${issue}" "In Review" --comment "In Review: ${pr_url}"
+      # TODO: incorporate "dev" command here - to also tag the assigned reviewer
+    fi
+    ;;
+  ai)
+    echo "Starting codex..."
+    exec codex "$(cat tmp/PROMPT.txt)"
     ;;
   mine)
     exec jira issue list -a"$ME" -s~Canceled -s~Done --columns TYPE,KEY,SUMMARY,STATUS,LABELS,UPDATED
@@ -163,6 +216,24 @@ case $1 in
           --comment "Completed via $REPO_URL/commit/$(echo $matching_commit | cut -d" " -f1)"
       fi
     done
+    ;;
+  dev)
+    issue=$(git branch --show-current | sed -E 's#^[a-z]*/([a-z]*-[0-9]*)-(.*)$#\1#' | tr '[:lower:]' '[:upper:]')
+    echo "Add a Jira comment with the PR URL? Paste it here (or hit RETURN to skip): "
+    read -r pr_url
+    # jira issue move "${issue}" "In Review" --comment "In Review: ${pr_url}"
+    echo "Waiting to get assigned reviewer..."
+    reviewer_github=""
+    while [ -z "$reviewer_github" ] || [ "$reviewer_github" == "null" ]; do
+      api_path=$(echo "$pr_url" | sed -E 's#https://github.com/(.*)/(.*)/pull/(.*)#repos/\1/\2/pulls/\3#')
+      reviewer_github=$(gh api "$api_path" | jq --raw-output '.requested_reviewers[0].login')
+      if [ "$reviewer_github" = "null" ]; then
+        sleep 2
+      fi
+    done
+    reviewer_jira=$(github_to_jira_username "$reviewer_github")
+    echo "Reviewer is ${reviewer_jira}"
+    jira_issue_update_custom_field "$issue" "Approvers" "$reviewer_jira"
     ;;
   *)
     echo "Usage: $(basename $0) [start|pr|mine|close-merged]"
